@@ -1,0 +1,29 @@
+# PEMOLA Python deps (excluding torch / detectron2 / MSDeformAttn — see scripts/install_env.sh)
+
+# core
+cython
+scipy
+scikit-image
+shapely
+PyYAML
+
+# vision / image io
+Pillow
+opencv-python
+
+# backbones
+timm
+
+# COCO / panoptic evaluation
+pycocotools
+panopticapi
+
+# CAM visualization (occ_cls_draw_cam.py)
+grad-cam
+
+# plotting
+matplotlib
+
+# tools/ optional — distributed job submission, h5 io
+submitit
+h5py

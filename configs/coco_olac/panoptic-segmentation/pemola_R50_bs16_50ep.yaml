@@ -1,0 +1,5 @@
+_BASE_: mask2former_COCO-OLAC_R50_bs16_50ep.yaml
+MODEL:
+  PEMOLA:
+    PE_MODULATION: True
+OUTPUT_DIR: output/pemola
