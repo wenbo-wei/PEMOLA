@@ -14,6 +14,9 @@ def add_pemola_config(cfg):
     cfg.MODEL.PEMOLA.VIS_PE_FEATURES = ["res3"]
     # PE channels to save when VIS_PE is True. Negative indices allowed (e.g. -1 = last channel).
     cfg.MODEL.PEMOLA.VIS_PE_CHANNELS = [0, 64, -65, -1]
+    # Occlusion level names in label-id order. The index of each name is the
+    # integer label fed to the occlusion embedding.
+    cfg.MODEL.PEMOLA.OCCLUSION_LEVELS = ["low", "mid", "high"]
 
 
 def add_maskformer2_config(cfg):

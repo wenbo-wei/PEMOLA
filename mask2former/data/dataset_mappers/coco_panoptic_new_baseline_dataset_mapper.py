@@ -97,7 +97,7 @@ class COCOPanopticNewBaselineDatasetMapper:
 
         if self.cfg.MODEL.PEMOLA.PE_MODULATION:
             self.dataset_root = os.getenv("DETECTRON2_DATASETS", "datasets")
-            self.occlusion_maps = {'low': 0, 'mid': 1, 'high': 2}
+            self.occlusion_maps = {name: i for i, name in enumerate(self.cfg.MODEL.PEMOLA.OCCLUSION_LEVELS)}
 
             if self.cfg.INPUT.DATASET_MAPPER_NAME == "coco_olac_panoptic_lsj":
                 self.cam_dir = os.path.join(self.dataset_root, "coco_olac_cam/cam_pt_train")

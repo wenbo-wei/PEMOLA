@@ -2,94 +2,167 @@
 # Licensed under the MIT License (see LICENSE).
 # PEMOLA: Occlusion-Aware Panoptic Segmentation with Joint Position Embedding
 # and Occlusion-Level Attention (ICME 2026).
+"""
+PEMOLA panoptic segmentation prediction script.
 
-import os
-import cv2
+Run via scripts/predict_pemola_olac.sh, or invoke directly — all dataset
+assets are CLI args, no per-dataset state is hard-coded in this file.
+"""
+
+import argparse
 import json
+import os
+from glob import glob
+
+import cv2
+import numpy as np
 import torch
 from PIL import Image
 
-# import some common detectron2 utilities
-from detectron2.engine import DefaultPredictor
+from detectron2.checkpoint import DetectionCheckpointer
 from detectron2.config import get_cfg
-from detectron2.utils.visualizer import Visualizer, ColorMode
-from detectron2.data import MetadataCatalog
+from detectron2.data import MetadataCatalog, detection_utils as utils
+from detectron2.data import transforms as T
+from detectron2.modeling import build_model
 from detectron2.projects.deeplab import add_deeplab_config
+from detectron2.utils.visualizer import ColorMode, Visualizer
 
-# import Mask2Former project
-from mask2former import add_maskformer2_config
-from mask2former import add_pemola_config
+from mask2former import add_maskformer2_config, add_pemola_config
 
-class Predictor:
-    def setup(self):
+
+class PemolaPredictor:
+    def __init__(self, config_file, weights, metadata_name,
+                 cam_dir=None, occlusion_json=None, enable_pemola=True):
         cfg = get_cfg()
         add_deeplab_config(cfg)
         add_maskformer2_config(cfg)
         add_pemola_config(cfg)
-        cfg.merge_from_file("configs/coco_olac/panoptic-segmentation/pemola_R50_bs16_50ep.yaml")
-        # cfg.MODEL.WEIGHTS = './model_zoo/coco_r50.pkl'
-        cfg.MODEL.MASK_FORMER.TEST.SEMANTIC_ON = True
-        cfg.MODEL.MASK_FORMER.TEST.INSTANCE_ON = True
+        cfg.merge_from_file(config_file)
+        cfg.MODEL.WEIGHTS = weights
         cfg.MODEL.MASK_FORMER.TEST.PANOPTIC_ON = True
-
-        # cfg.MODEL.WEIGHTS = "output/model_final_a100base.pth"
-        # cfg.MODEL.PEMOLA.PE_MODULATION = False
-        cfg.MODEL.WEIGHTS = "output/model_final_pemola.pth"
-        cfg.MODEL.PEMOLA.PE_MODULATION = True
+        cfg.MODEL.MASK_FORMER.TEST.INSTANCE_ON = False
+        cfg.MODEL.MASK_FORMER.TEST.SEMANTIC_ON = False
+        cfg.MODEL.PEMOLA.PE_MODULATION = enable_pemola
+        cfg.freeze()
 
         self.cfg = cfg
-        self.predictor = DefaultPredictor(cfg)
-        self.coco_metadata = MetadataCatalog.get("coco_2017_val_panoptic")
+        self.metadata = MetadataCatalog.get(metadata_name)
+        self.input_format = cfg.INPUT.FORMAT
+        self.augmentations = T.AugmentationList(utils.build_augmentation(cfg, is_train=False))
 
-        if self.cfg.MODEL.PEMOLA.PE_MODULATION:
-            self.dataset_root = os.getenv("DETECTRON2_DATASETS", "datasets")
-            self.occlusion_maps = {'low': 0, 'mid': 1, 'high': 2}
+        self.model = build_model(cfg)
+        self.model.eval()
+        DetectionCheckpointer(self.model).load(cfg.MODEL.WEIGHTS)
 
-            if self.cfg.INPUT.DATASET_MAPPER_NAME == "coco_olac_panoptic_lsj":
-                self.cam_dir = os.path.join(self.dataset_root, "coco_olac_cam/cam_pt_val")
-                occlusion_label_json = os.path.join(self.dataset_root, "coco_olac/val/occlusion_label_val.json")
-            elif self.cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_panoptic":
-                self.cam_dir = os.path.join(self.dataset_root, "cityscapes_cam/cam_pt_val")
-                occlusion_label_json = os.path.join(self.dataset_root, "cityscapes/gtFine/occlusion_label_val.json")
-            else:
-                ValueError(f"Unsupported cfg.INPUT.DATASET_MAPPER_NAME: {self.cfg.INPUT.DATASET_MAPPER_NAME}.")
+        if enable_pemola:
+            if not (cam_dir and occlusion_json):
+                raise ValueError(
+                    "--cam-dir and --occlusion-json are required when PEMOLA modulation is enabled."
+                )
+            self.cam_dir = cam_dir
+            with open(occlusion_json) as f:
+                self.occlusion_ann = json.load(f)
+            self.occlusion_labels = {name: i for i, name in enumerate(cfg.MODEL.PEMOLA.OCCLUSION_LEVELS)}
+        else:
+            self.cam_dir = None
+            self.occlusion_ann = None
+            self.occlusion_labels = None
 
-            with open(occlusion_label_json, 'r') as olj:
-                self.occlusion_label_ann = json.load(olj)
+    def _build_input(self, im_bgr, img_name):
+        # Detectron2 inputs follow the format of utils.build_augmentation /
+        # DatasetMapper: image is HxWxC in cfg.INPUT.FORMAT (RGB or BGR), augmented
+        # then transposed to CxHxW float tensor. For PEMOLA we also feed an
+        # occlusion CAM, resized to original image size and run through the same
+        # augmentation so it stays spatially aligned with the image.
+        image = im_bgr if self.input_format == "BGR" else im_bgr[:, :, ::-1]
+        height, width = image.shape[:2]
+        aug_input = T.AugInput(image)
+        transforms = self.augmentations(aug_input)
+        aug_image = aug_input.image
+        inputs = {
+            "image": torch.as_tensor(np.ascontiguousarray(aug_image.transpose(2, 0, 1))),
+            "height": height,
+            "width": width,
+        }
+        if self.occlusion_ann is not None:
+            cam = torch.load(
+                os.path.join(self.cam_dir, f"{img_name}.pt"), weights_only=False
+            ).numpy()
+            cam_resized = cv2.resize(cam, (width, height), interpolation=cv2.INTER_LINEAR)
+            cam_aug = transforms.apply_image(cam_resized)
+            inputs["occlusion_cam"] = torch.as_tensor(np.ascontiguousarray(cam_aug))
+            inputs["occlusion_label"] = self.occlusion_labels[self.occlusion_ann[img_name]]
+        return inputs
 
-    def predict(self, image):
-        auxilary = {}
-        img_name = os.path.splitext(os.path.basename(image))[0]
-        # img_id = img_name.lstrip("0")
-        auxilary["occlusion_label"] = self.occlusion_maps[self.occlusion_label_ann[img_name]]
-        cam = torch.load(os.path.join(self.cam_dir, f"{img_name}.pt"), weights_only=False).numpy()
-        # cam_resized = cv2.resize(cam, (auxilary['width'], auxilary['height']),
-        #                          interpolation=cv2.INTER_LINEAR)
-        # cam_transformed = transforms.apply_image(cam_resized)
-        # auxilary["occlusion_cam"] = torch.as_tensor(np.ascontiguousarray(cam_transformed))
-        auxilary["occlusion_cam"] = cam
-        im = cv2.imread(str(image))
-        outputs = self.predictor(im, auxilary)
-        v = Visualizer(im[:, :, ::-1], self.coco_metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
-        panoptic_result = v.draw_panoptic_seg(outputs["panoptic_seg"][0].to("cpu"),
-                                              outputs["panoptic_seg"][1]).get_image()
-        # v = Visualizer(im[:, :, ::-1], self.coco_metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
-        # instance_result = v.draw_instance_predictions(outputs["instances"].to("cpu")).get_image()
-        # v = Visualizer(im[:, :, ::-1], self.coco_metadata, scale=1.2, instance_mode=ColorMode.IMAGE_BW)
-        # semantic_result = v.draw_sem_seg(outputs["sem_seg"].argmax(0).to("cpu")).get_image()
-        # result = np.concatenate((panoptic_result, instance_result, semantic_result), axis=0)[:, :, ::-1]
+    def predict(self, image_path, out_dir, out_format="pdf"):
+        img_name = os.path.splitext(os.path.basename(image_path))[0]
+        im = cv2.imread(image_path)
+        if im is None:
+            raise FileNotFoundError(f"Could not read image: {image_path}")
 
-        # model_tag = "pemola" if self.cfg.MODEL.PEMOLA.PE_MODULATION else "base"
-        # out_name = f"{img_name}_{model_tag}.pdf"
-        out_name = f"{img_name}.pdf"
-        out_path = os.path.join(".", out_name)
-        img = Image.fromarray(panoptic_result)
-        img.save(out_path, "PDF")
+        inputs = self._build_input(im, img_name)
+        with torch.no_grad():
+            outputs = self.model([inputs])[0]
+
+        vis = Visualizer(im[:, :, ::-1], self.metadata, scale=1.2,
+                         instance_mode=ColorMode.IMAGE_BW)
+        panoptic_seg, segments_info = outputs["panoptic_seg"]
+        rendered = vis.draw_panoptic_seg(panoptic_seg.to("cpu"), segments_info).get_image()
+
+        os.makedirs(out_dir, exist_ok=True)
+        out_path = os.path.join(out_dir, f"{img_name}.{out_format}")
+        if out_format == "pdf":
+            Image.fromarray(rendered).save(out_path, "PDF")
+        else:
+            cv2.imwrite(out_path, rendered[:, :, ::-1])
         return out_path
 
 
+def _iter_inputs(path):
+    if os.path.isdir(path):
+        for ext in (".jpg", ".jpeg", ".png", ".bmp"):
+            yield from sorted(glob(os.path.join(path, f"*{ext}")))
+    else:
+        yield path
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="PEMOLA panoptic prediction")
+    parser.add_argument("--config", required=True, help="path to detectron2 yaml config")
+    parser.add_argument("--weights", required=True, help="path to model checkpoint (.pth/.pkl)")
+    parser.add_argument("--input", required=True, help="image file or directory of images")
+    parser.add_argument("--output-dir", default="output/predictions",
+                        help="where to write rendered predictions (default: %(default)s)")
+    parser.add_argument("--metadata", default="coco_2017_val_panoptic",
+                        help="detectron2 MetadataCatalog name used for visualisation "
+                             "(default: %(default)s)")
+    parser.add_argument("--cam-dir",
+                        help="directory containing per-image *.pt CAM tensors "
+                             "(required unless --no-pemola)")
+    parser.add_argument("--occlusion-json",
+                        help="JSON mapping image name -> occlusion level "
+                             "(required unless --no-pemola)")
+    parser.add_argument("--no-pemola", action="store_true",
+                        help="disable PEMOLA modulation to run the baseline")
+    parser.add_argument("--format", choices=("pdf", "png", "jpg"), default="pdf",
+                        help="output image format (default: %(default)s)")
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    predictor = PemolaPredictor(
+        config_file=args.config,
+        weights=args.weights,
+        metadata_name=args.metadata,
+        cam_dir=args.cam_dir,
+        occlusion_json=args.occlusion_json,
+        enable_pemola=not args.no_pemola,
+    )
+    for image_path in _iter_inputs(args.input):
+        out_path = predictor.predict(image_path, args.output_dir, args.format)
+        print(f"[ok] {image_path} -> {out_path}")
+
+
 if __name__ == "__main__":
-    image_predictor = Predictor()
-    im_dir = '/home/wenbo/data/datasets/coco_olac/val/val/000000055167.jpg'
-    image_predictor.setup()
-    image_predictor.predict(im_dir)
+    main()
