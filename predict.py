@@ -31,7 +31,7 @@ from mask2former import add_maskformer2_config, add_pemola_config
 
 
 class PemolaPredictor:
-    def __init__(self, config_file, weights, metadata_name,
+    def __init__(self, config_file, weights,
                  cam_dir=None, occlusion_json=None, enable_pemola=True):
         cfg = get_cfg()
         add_deeplab_config(cfg)
@@ -46,7 +46,7 @@ class PemolaPredictor:
         cfg.freeze()
 
         self.cfg = cfg
-        self.metadata = MetadataCatalog.get(metadata_name)
+        self.metadata = MetadataCatalog.get(cfg.DATASETS.TEST[0])
         self.input_format = cfg.INPUT.FORMAT
         self.augmentations = T.AugmentationList(utils.build_augmentation(cfg, is_train=False))
 
@@ -133,9 +133,6 @@ def parse_args():
     parser.add_argument("--input", required=True, help="image file or directory of images")
     parser.add_argument("--output-dir", default="output/predictions",
                         help="where to write rendered predictions (default: %(default)s)")
-    parser.add_argument("--metadata", default="coco_2017_val_panoptic",
-                        help="detectron2 MetadataCatalog name used for visualisation "
-                             "(default: %(default)s)")
     parser.add_argument("--cam-dir",
                         help="directory containing per-image *.pt CAM tensors "
                              "(required unless --no-pemola)")
@@ -154,7 +151,6 @@ def main():
     predictor = PemolaPredictor(
         config_file=args.config,
         weights=args.weights,
-        metadata_name=args.metadata,
         cam_dir=args.cam_dir,
         occlusion_json=args.occlusion_json,
         enable_pemola=not args.no_pemola,

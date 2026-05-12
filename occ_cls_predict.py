@@ -81,7 +81,6 @@ def predict(config, model, data_loader):
     # Label-completion: if a sample already has a ground-truth occlusion label in
     # OCCLUSION.ANN, use it; otherwise fall back to model prediction. Output is a
     # merged label map, not pure predictions.
-    label_map = {0: 'low', 1: 'mid', 2: 'high'}
     label_dict = {}
     with open(config.OCCLUSION.ANN, 'r') as oa:
         occlusion_ann = json.load(oa)
@@ -101,7 +100,7 @@ def predict(config, model, data_loader):
             if _name in occlusion_ann:
                 label_dict[_name] = occlusion_ann[_name]
             else:
-                label_dict[_name] = label_map[int(pred)]
+                label_dict[_name] = config.OCCLUSION.LEVELS[int(pred)]
 
     gathered = [None for _ in range(dist.get_world_size())]
     dist.all_gather_object(gathered, label_dict)
