@@ -1,6 +1,6 @@
 # Occlusion-Aware Panoptic Segmentation with Joint Position Embedding and Occlusion-Level Attention (ICME 2026)
 
-[Wenbo Wei](https://scholar.google.com/citations?user=45fCx08AAAAJ&hl=en), [Jun Wang](https://scholar.google.com/citations?user=b_jEBHEAAAAJ&hl=en), [Shan Raza](https://scholar.google.com/citations?user=XfBoSP4AAAAJ&hl=en), [Abhir Bhalerao](https://scholar.google.com/citations?user=yPKOcgQAAAAJ&hl=en)
+[Wenbo Wei](https://scholar.google.com/citations?user=45fCx08AAAAJ&hl=en), [Jun Wang](https://scholar.google.com/citations?user=b_jEBHEAAAAJ&hl=en), [Shan Raza](https://scholar.google.com/citations?user=yPKOcgQAAAAJ&hl=en), [Abhir Bhalerao](https://scholar.google.com/citations?user=XfBoSP4AAAAJ&hl=en)
 
 <p align="center">
   <img src="assets/architecture.png" width="900" alt="PEMOLA architecture">
