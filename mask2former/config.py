@@ -121,7 +121,6 @@ def add_maskformer2_config(cfg):
     cfg.MODEL.DINOV3.SIZE_DIVISIBILITY = 32
     # Freezing
     cfg.MODEL.DINOV3.FREEZE_BACKBONE = True
-    cfg.MODEL.DINOV3.FREEZE_NECK = False
 
     # NOTE: maskformer2 extra configs
     # transformer module

@@ -107,9 +107,6 @@ class D2DINOv3(Backbone):
             for p in self.vit.parameters():
                 p.requires_grad = False
             self.vit.eval()
-        if cfg_d.FREEZE_NECK:
-            for p in self.sfp.parameters():
-                p.requires_grad = False
 
         self._out_features = ("res2", "res3", "res4", "res5")
         self._out_feature_strides = {"res2": 4, "res3": 8, "res4": 16, "res5": 32}
