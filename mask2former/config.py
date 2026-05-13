@@ -105,6 +105,24 @@ def add_maskformer2_config(cfg):
     cfg.MODEL.SWIN.OUT_FEATURES = ["res2", "res3", "res4", "res5"]
     cfg.MODEL.SWIN.USE_CHECKPOINT = False
 
+    # DINOv3 backbone
+    cfg.MODEL.DINOV3 = CN()
+    cfg.MODEL.DINOV3.CHECKPOINT = ""  # local path to dinov3 safetensors
+    # ViT trunk (defaults match facebook/dinov3-vitl16-pretrain-lvd1689m)
+    cfg.MODEL.DINOV3.IMG_SIZE = 512
+    cfg.MODEL.DINOV3.PATCH_SIZE = 16
+    cfg.MODEL.DINOV3.EMBED_DIM = 1024
+    cfg.MODEL.DINOV3.DEPTH = 24
+    cfg.MODEL.DINOV3.NUM_HEADS = 16
+    cfg.MODEL.DINOV3.MLP_DIM = 4096
+    cfg.MODEL.DINOV3.NUM_REGISTER_TOKENS = 4
+    # SFP / output
+    cfg.MODEL.DINOV3.OUT_CHANNELS = 256
+    cfg.MODEL.DINOV3.SIZE_DIVISIBILITY = 32
+    # Freezing
+    cfg.MODEL.DINOV3.FREEZE_BACKBONE = True
+    cfg.MODEL.DINOV3.FREEZE_NECK = False
+
     # NOTE: maskformer2 extra configs
     # transformer module
     cfg.MODEL.MASK_FORMER.TRANSFORMER_DECODER_NAME = "MultiScaleMaskedTransformerDecoder"

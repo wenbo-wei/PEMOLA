@@ -25,12 +25,15 @@ wheels/
 # pytorch/python/numpy formats
 *.pth
 *.pkl
+*.pt
+*.safetensors
 *.npy
 *.ts
 model_ts*.txt
 *.sh
 !mask2former/modeling/pixel_decoder/ops/make.sh
 !install_env.sh
+!install_dinov3.sh
 !scripts/*.sh
 
 # ipython/jupyter notebooks
