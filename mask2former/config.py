@@ -105,6 +105,28 @@ def add_maskformer2_config(cfg):
     cfg.MODEL.SWIN.OUT_FEATURES = ["res2", "res3", "res4", "res5"]
     cfg.MODEL.SWIN.USE_CHECKPOINT = False
 
+    # SAM3 backbone
+    cfg.MODEL.SAM3 = CN()
+    cfg.MODEL.SAM3.CHECKPOINT = ""  # local path to sam3.pt / sam3.1_*.pt
+    # ViT trunk (defaults match facebookresearch/sam3 model_builder._create_vit_backbone)
+    cfg.MODEL.SAM3.IMG_SIZE = 1008
+    cfg.MODEL.SAM3.PRETRAIN_IMG_SIZE = 336
+    cfg.MODEL.SAM3.PATCH_SIZE = 14
+    cfg.MODEL.SAM3.EMBED_DIM = 1024
+    cfg.MODEL.SAM3.DEPTH = 32
+    cfg.MODEL.SAM3.NUM_HEADS = 16
+    cfg.MODEL.SAM3.MLP_RATIO = 4.625
+    cfg.MODEL.SAM3.WINDOW_SIZE = 24
+    cfg.MODEL.SAM3.GLOBAL_ATT_BLOCKS = [7, 15, 23, 31]
+    cfg.MODEL.SAM3.DROP_PATH_RATE = 0.0
+    cfg.MODEL.SAM3.USE_ACT_CHECKPOINT = True
+    # SFP / output
+    cfg.MODEL.SAM3.OUT_CHANNELS = 256
+    cfg.MODEL.SAM3.SIZE_DIVISIBILITY = 32
+    # Freezing
+    cfg.MODEL.SAM3.FREEZE_BACKBONE = True
+    cfg.MODEL.SAM3.FREEZE_NECK = False
+
     # NOTE: maskformer2 extra configs
     # transformer module
     cfg.MODEL.MASK_FORMER.TRANSFORMER_DECODER_NAME = "MultiScaleMaskedTransformerDecoder"

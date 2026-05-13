@@ -1,0 +1,36 @@
+_BASE_: ../mask2former_COCO-OLAC_R50_bs16_50ep.yaml
+MODEL:
+  BACKBONE:
+    NAME: "D2SAM3"
+    FREEZE_AT: 0
+  WEIGHTS: ""  # SAM3 ckpt is loaded via MODEL.SAM3.CHECKPOINT (raw .pt, not detectron2 format)
+  # SAM3 normalizes images with mean=0.5, std=0.5 on [0,1] inputs.
+  # Detectron2 feeds raw [0,255] inputs; the equivalent is mean=127.5, std=127.5.
+  PIXEL_MEAN: [127.5, 127.5, 127.5]
+  PIXEL_STD: [127.5, 127.5, 127.5]
+  SAM3:
+    CHECKPOINT: "mask2former/pretrained/sam3.pt"
+    # 504 = 14×36, halves ViT compute vs the 1008 native size.
+    # RoPE freqs_cis is regenerated at 36×36 (instead of pretrained 72×72),
+    # which may slightly underuse the pretrained representation but fits 4090.
+    IMG_SIZE: 504
+    OUT_CHANNELS: 256
+    SIZE_DIVISIBILITY: 32
+    FREEZE_BACKBONE: True
+    FREEZE_NECK: False
+    USE_ACT_CHECKPOINT: True
+  MASK_FORMER:
+    NUM_OBJECT_QUERIES: 200
+  PEMOLA:
+    PE_MODULATION: True
+SOLVER:
+  # Tuned for 2× RTX 4090 (24 GB) — bs=16 is the throughput sweet spot:
+  # ~43 img/s, ~10.4 GB/GPU peak, both cards near full util.
+  # MAX_ITER preserves the ~1.5M-sample (~50 epochs over COCO-OLAC) budget of
+  # the R50 50ep recipe: 46760 iters × 32 bs == 93520 iters × 16 bs.
+  IMS_PER_BATCH: 16
+  BASE_LR: 0.00005
+  BACKBONE_MULTIPLIER: 0.1   # ViT trunk frozen (skipped by optimizer); applies to SFP neck only
+  STEPS: (84168, 88845)
+  MAX_ITER: 93520
+OUTPUT_DIR: output/pemola_sam3
