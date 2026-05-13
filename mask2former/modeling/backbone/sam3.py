@@ -205,6 +205,10 @@ class D2SAM3(Backbone):
             raise RuntimeError(
                 f"D2SAM3 expects 4D ViT output (B,C,H,W); got shape {tuple(x_last.shape)}"
             )
+        # Pin ViT output to standard NCHW contiguous layout so downstream 1×1
+        # convs produce gradients with strides DDP expects (otherwise we get
+        # "Grad strides do not match bucket view" warnings).
+        x_last = x_last.contiguous()
 
         target_strides = (4, 8, 16, 32)
         out = {}
@@ -216,5 +220,5 @@ class D2SAM3(Backbone):
                 f = F.interpolate(
                     f, size=(th, tw), mode="bilinear", align_corners=False
                 )
-            out[self._out_features[i]] = f
+            out[self._out_features[i]] = f.contiguous()
         return out

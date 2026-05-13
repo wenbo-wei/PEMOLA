@@ -178,9 +178,12 @@ class D2DINOv3(Backbone):
             hidden = self.vit(x).last_hidden_state
 
         # Drop cls + register tokens, reshape patch tokens back to a 2D grid.
+        # `.contiguous()` here pins the result to plain NCHW layout so the
+        # downstream 1×1 convs produce gradients with strides DDP expects
+        # (otherwise we get a "Grad strides do not match bucket view" warning).
         patch_tokens = hidden[:, self._n_special :, :]  # (B, N, C)
         Hp, Wp = H // self._patch_size, W // self._patch_size
-        x_last = patch_tokens.transpose(1, 2).reshape(B, -1, Hp, Wp)  # (B, C, Hp, Wp)
+        x_last = patch_tokens.transpose(1, 2).reshape(B, -1, Hp, Wp).contiguous()
 
         # SFP -> 4 outputs at native sub-strides; bilinear-snap each to PEMOLA's
         # expected stride (since DINOv3 patch=16 already aligns with 4/8/16/32
@@ -193,5 +196,5 @@ class D2DINOv3(Backbone):
             tw = max(1, math.ceil(W / target_strides[i]))
             if f.shape[-2:] != (th, tw):
                 f = F.interpolate(f, size=(th, tw), mode="bilinear", align_corners=False)
-            out[self._out_features[i]] = f
+            out[self._out_features[i]] = f.contiguous()
         return out
