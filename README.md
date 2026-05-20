@@ -19,8 +19,6 @@
 
 <p align="center"><img src="assets/architecture.png" width="900" alt="PEMOLA architecture"></p>
 
----
-
 ## Table of Contents
 - [News](#news)
 - [Abstract](#abstract)
@@ -34,8 +32,6 @@
 - [Citation](#citation)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
-
----
 
 ## News
 - [2026-03] Paper accepted to **ICME 2026**.
@@ -51,8 +47,6 @@ Transformer-based panoptic segmenters degrade sharply on heavily occluded scenes
 - **Lightweight.** A single classifier forward pass + one modulation step per query at inference; <1% added FLOPs.
 - **Backbone-agnostic.** Validated end-to-end on ResNet-50; drop-in configs for ResNet-101, Swin-T/S/B/L, **DINOv3** and **SAM 3** ViT backbones are included for easy extension.
 - **Generalises across datasets.** Improves PQ on both **COCO-OLAC** and the newly annotated **Cityscapes-OLAC**, with the largest gains on the heavily-occluded subset.
-
----
 
 ## Model Zoo &amp; Results
 
@@ -101,8 +95,6 @@ Evaluated on the COCO-OLAC three-way (low / mid / high) occlusion-level classifi
 </tbody>
 </table>
 
----
-
 ## Installation
 
 All experiments reported in this paper are conducted on **3× NVIDIA A100 (40 GB)** with **CUDA 13.0**.
@@ -131,8 +123,6 @@ The script installs, in order:
 > ```
 
 Each installer block in `install_env.sh` is idempotent — you can re-run individual sections without rebuilding the whole env.
-
----
 
 ## Data Preparation
 
@@ -164,8 +154,6 @@ python tools/blacken_bg.py \
 ```
 
 Set `DETECTRON2_DATASETS=datasets/data` (already exported by every script under `scripts/`) so that detectron2 resolves dataset paths correctly.
-
----
 
 ## Training
 
@@ -200,8 +188,6 @@ python train_net.py \
     --num-gpus 3
 ```
 
----
-
 ## Evaluation
 
 ```bash
@@ -218,8 +204,6 @@ Override on the command line, e.g.:
 ```bash
 bash scripts/eval_pemola_olac_r50.sh MODEL.WEIGHTS /path/to/model_final.pth
 ```
-
----
 
 ## Inference &amp; Visualization
 
@@ -245,8 +229,6 @@ bash scripts/occ_cls_predict.sh
 bash scripts/occ_cls_draw_cam.sh
 ```
 
----
-
 ## Citation
 
 If you find PEMOLA useful for your research, please consider citing:
@@ -271,8 +253,6 @@ For the **COCO-OLAC** benchmark used in our experiments, please also cite:
 }
 ```
 
----
-
 ## Acknowledgements
 
 PEMOLA is built on top of the following excellent open-source projects.
@@ -287,8 +267,6 @@ Modified portions retain the original copyright headers, in accordance with each
 - [**pytorch-grad-cam**](https://github.com/jacobgil/pytorch-grad-cam) (Jacob Gildenblat, MIT) — used as an external dependency for extracting occlusion-level attention via Grad-CAM in `occ_cls_draw_cam.py`. No source code is copied; the library is imported through `pip install grad-cam`.
 
 We thank the authors of these works for releasing their code.
-
----
 
 ## License
 
