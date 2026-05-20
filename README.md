@@ -1,16 +1,12 @@
-# Occlusion-Aware Panoptic Segmentation with Joint Position Embedding and Occlusion-Level Attention
+# Occlusion-Aware Panoptic Segmentation with Joint Position Embedding and Occlusion-Level Attention (ICME 2026)
 
 <p align="center">
-  <b>ICME 2026</b>
-</p>
-
-<p align="center">
-  <a href="https://scholar.google.com/citations?user=45fCx08AAAAJ&hl=en">Wenbo Wei</a><sup>1</sup>,
-  <a href="https://scholar.google.com/citations?user=b_jEBHEAAAAJ&hl=en">Jun Wang</a><sup>1</sup>,
-  <a href="https://scholar.google.com/citations?user=yPKOcgQAAAAJ&hl=en">Shan Raza</a><sup>1</sup>,
-  <a href="https://scholar.google.com/citations?user=XfBoSP4AAAAJ&hl=en">Abhir Bhalerao</a><sup>1</sup>
+  <a href="https://scholar.google.com/citations?user=45fCx08AAAAJ&hl=en">Wenbo Wei</a>,
+  <a href="https://scholar.google.com/citations?user=b_jEBHEAAAAJ&hl=en">Jun Wang</a>,
+  <a href="https://scholar.google.com/citations?user=yPKOcgQAAAAJ&hl=en">Shan Raza</a>,
+  <a href="https://scholar.google.com/citations?user=XfBoSP4AAAAJ&hl=en">Abhir Bhalerao</a>
   <br>
-  <sup>1</sup>University of Warwick
+  University of Warwick
 </p>
 
 <p align="center">
@@ -42,7 +38,7 @@
 ---
 
 ## News
-- **2026-03** — Paper accepted to **ICME 2026**.
+- [2026-03] Paper accepted to **ICME 2026**.
 
 ## Abstract
 
