@@ -37,8 +37,8 @@
 
 - **Plug-and-play.** Drops into any transformer-based panoptic segmenter (Mask2Former, Mask DINO) without architectural changes to the backbone or mask decoder.
 - **Occlusion-aware queries.** Combines spatial (Grad-CAM) and channel-wise (label embedding) occlusion cues directly at the joint position embedding.
-- **Lightweight.** A single classifier forward pass + one modulation step per query at inference; <1% added FLOPs.
-- **Backbone-agnostic.** Validated end-to-end on ResNet-50; drop-in configs for ResNet-101 and Swin-T/S/B/L are included for easy extension.
+- **Lightweight.** A single classifier forward pass + one modulation step per query at inference, <1% added FLOPs.
+- **Backbone-agnostic.** Validated end-to-end on ResNet-50. Drop-in configs for ResNet-101 and Swin-T/S/B/L are included for easy extension.
 - **Generalises across datasets.** Improves PQ on both **COCO-OLAC** and the newly annotated **Cityscapes-OLAC**, with the largest gains on the heavily-occluded subset.
 
 ## Model Zoo &amp; Results
@@ -64,7 +64,7 @@ All numbers are panoptic-segmentation metrics on the *full* OLAC validation set 
 
 ### Occlusion Classifier (auxiliary)
 
-Evaluated on the COCO-OLAC three-way (low / mid / high) occlusion-level classification task; numbers are best-epoch Top-1 accuracy (%) on the validation split with background-blackened inputs.
+Evaluated on the COCO-OLAC three-way (low / mid / high) occlusion-level classification task. Numbers are best-epoch Top-1 accuracy (%) on the validation split with background-blackened inputs.
 
 <table>
 <thead>
@@ -143,7 +143,7 @@ Cityscapes itself may not be redistributed, so build the per-level subsets local
 # 2. Generate the panoptic format:
 CITYSCAPES_DATASET=datasets/data/cityscapes \
     python -m cityscapesscripts.preparation.createPanopticImgs
-# 3. Slice into occlusion-level subsets (symlinks by default; --copy for real copies):
+# 3. Slice into occlusion-level subsets (symlinks by default, --copy for real copies):
 python tools/prepare_cityscapes_olac.py
 ```
 
@@ -178,11 +178,11 @@ bash scripts/train_pemola_olac_r50.sh      # ResNet-50
 bash scripts/train_pemola_olac_swin.sh     # Swin-L  (IN-22K, 384)
 ```
 
-> Scripts in `scripts/` ship with `--num-gpus 2` for typical local development. The paper numbers are reproduced with `--num-gpus 3` on **3× A100 (40 GB)**; adjust the flag (and `SOLVER.IMS_PER_BATCH` in the YAML) to match your hardware.
+> Scripts in `scripts/` ship with `--num-gpus 2` for typical local development. The paper numbers are reproduced with `--num-gpus 3` on **3× A100 (40 GB)**. Adjust the flag (and `SOLVER.IMS_PER_BATCH` in the YAML) to match your hardware.
 
 ### 3. PEMOLA panoptic segmentation on Cityscapes-OLAC
 
-Use the configs under `configs/cityscapes/panoptic-segmentation/` with the same `train_net.py` interface; example:
+Use the configs under `configs/cityscapes/panoptic-segmentation/` with the same `train_net.py` interface, for example:
 
 ```bash
 export DETECTRON2_DATASETS=datasets/data
@@ -263,7 +263,7 @@ Modified portions retain the original copyright headers, in accordance with each
 - [**Mask DINO**](https://github.com/IDEA-Research/MaskDINO) (IDEA, Apache 2.0) — alternative panoptic baseline used in our Mask DINO experiments.
 - [**Swin Transformer**](https://github.com/microsoft/Swin-Transformer) (Microsoft, MIT) — Swin-L backbone and occlusion classifier.
 - [**Deformable DETR**](https://github.com/fundamentalvision/Deformable-DETR) (SenseTime, Apache 2.0) — MSDeformAttn CUDA op.
-- [**pytorch-grad-cam**](https://github.com/jacobgil/pytorch-grad-cam) (Jacob Gildenblat, MIT) — used as an external dependency for extracting occlusion-level attention via Grad-CAM in `occ_cls_draw_cam.py`. No source code is copied; the library is imported through `pip install grad-cam`.
+- [**pytorch-grad-cam**](https://github.com/jacobgil/pytorch-grad-cam) (Jacob Gildenblat, MIT) — used as an external dependency for extracting occlusion-level attention via Grad-CAM in `occ_cls_draw_cam.py`. No source code is copied. The library is imported through `pip install grad-cam`.
 
 We thank the authors of these works for releasing their code.
 
