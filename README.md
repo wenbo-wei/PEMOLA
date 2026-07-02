@@ -21,7 +21,6 @@
 
 ## Table of Contents
 - [News](#news)
-- [Abstract](#abstract)
 - [Highlights](#highlights)
 - [Model Zoo &amp; Results](#model-zoo--results)
 - [Installation](#installation)
@@ -35,10 +34,6 @@
 
 ## News
 - [2026-03] Paper accepted to **ICME 2026**.
-
-## Abstract
-
-Panoptic segmentation in complex scenes remains challenging because of occlusions, yet modern approaches often neglect occlusion modelling. In this paper, we propose **P**osition **E**mbedding **M**odulation with **O**cclusion-**L**evel **A**ttention (**PEMOLA**), a novel occlusion-aware module that can be seamlessly integrated into transformer-based panoptic segmentation. To obtain occlusion cues, we train an occlusion classifier on the COCO-OLAC dataset. The classifier derives the occlusion-level attention, which serves as spatial guidance, while the occlusion labels are encoded into a learnable embedding to produce channel-wise weights. Through joint modulation, PEMOLA elegantly introduces the occlusion priors into the position embedding, thereby improving the occlusion modelling. We further annotate the Cityscapes dataset with occlusion levels, termed Cityscapes Occlusion Labels for All Computer Vision Tasks (**Cityscapes-OLAC**), following the same labelling protocol as COCO-OLAC, to evaluate the cross-dataset generalisation ability of PEMOLA. Extensive experiments on COCO-OLAC and Cityscapes-OLAC demonstrate that PEMOLA consistently improves panoptic segmentation quality while introducing minimal computational overhead. These results highlight the importance of occlusion modelling, where incorporating occlusion-level attention helps deliver robust panoptic segmentation under occlusion.
 
 ## Highlights
 
