@@ -128,11 +128,30 @@ datasets/data/
 │   ├── train/, val/                      # RGB images
 │   ├── annotations/                      # panoptic + instance JSONs
 │   └── occlusion_label_{train,val}.json  # per-instance occlusion level
-├── cityscapes_olac/
-│   └── ...
+├── cityscapes/                           # official Cityscapes (leftImg8bit/, gtFine/)
+├── cityscapes_olac/                      # built by tools/prepare_cityscapes_olac.py
+│   ├── leftImg8bit/{train,val}_{low,mid,high}/
+│   └── gtFine/                           # per-level gtFine, panoptic JSONs, occlusion labels
 └── coco_olac_cls/                        # bg-blackened crops for the classifier
     ├── train/<class>/*.jpg
     └── val/<class>/*.jpg
+```
+
+### Cityscapes-OLAC
+
+The occlusion-level annotations introduced in this work are shipped in this repository under
+[`datasets/cityscapes_olac/`](datasets/cityscapes_olac) — `occlusion_label_{train,val}.json`, one
+`low / mid / high` level per image (2975 train / 500 val), following the same labelling protocol as COCO-OLAC.
+Cityscapes itself may not be redistributed, so build the per-level subsets locally:
+
+```bash
+# 1. Download leftImg8bit + gtFine from https://www.cityscapes-dataset.com/
+#    into datasets/data/cityscapes/
+# 2. Generate the panoptic format:
+CITYSCAPES_DATASET=datasets/data/cityscapes \
+    python -m cityscapesscripts.preparation.createPanopticImgs
+# 3. Slice into occlusion-level subsets (symlinks by default; --copy for real copies):
+python tools/prepare_cityscapes_olac.py
 ```
 
 For the **occlusion classifier**, training images are pre-processed by blackening non-object regions
