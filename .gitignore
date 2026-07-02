@@ -25,6 +25,8 @@ wheels/
 # pytorch/python/numpy formats
 *.pth
 *.pkl
+*.pt
+*.safetensors
 *.npy
 *.ts
 model_ts*.txt
@@ -55,3 +57,4 @@ model_ts*.txt
 /snippet
 /notes
 /occlusion_cls/pretrained
+/output_vis_auto

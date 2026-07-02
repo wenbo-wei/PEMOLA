@@ -1,4 +1,5 @@
 DATA:
+  BATCH_SIZE: 64
   IMG_SIZE: 224
   DATASET: coco_olac_cls
 MODEL:
@@ -10,8 +11,8 @@ TRAIN:
   EPOCHS: 30
   WARMUP_EPOCHS: 5
   WEIGHT_DECAY: 1e-4
-  BASE_LR: 1e-3
-  WARMUP_LR: 1e-6
-  MIN_LR: 1e-5
+  BASE_LR: 1.63e-3
+  WARMUP_LR: 1.63e-6
+  MIN_LR: 1.63e-5
 TEST:
   CROP: False

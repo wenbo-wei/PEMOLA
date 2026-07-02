@@ -1,4 +1,5 @@
 DATA:
+  BATCH_SIZE: 64
   DATASET: coco_olac_cls
 MODEL:
   TYPE: swin
@@ -14,6 +15,6 @@ TRAIN:
   EPOCHS: 30
   WARMUP_EPOCHS: 5
   WEIGHT_DECAY: 0.05
-  BASE_LR: 6.6e-5 # 4096 batch-size
-  WARMUP_LR: 6.6e-8
-  MIN_LR: 6.6e-7
+  BASE_LR: 8.6e-5
+  WARMUP_LR: 8.6e-8
+  MIN_LR: 8.6e-7
