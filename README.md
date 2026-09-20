@@ -53,19 +53,19 @@ Segmentation results below use the *full* OLAC validation set; occlusion-subset 
 
 ### Panoptic Segmentation on COCO-OLAC
 
-| Backbone | Method | Epoch | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
-|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| ResNet-50 | Mask2Former † | 50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [yaml](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) | — |
-| ResNet-50 | **+ PEMOLA** | 50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [release yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
-| ResNet-50 | Mask DINO † | 50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [yaml](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
-| ResNet-50 | **+ PEMOLA** | 50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [yaml](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| Backbone | Method | Epoch | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config / Weights |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| ResNet-50 | Mask2Former † | 50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) |
+| ResNet-50 | **+ PEMOLA** | 50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| ResNet-50 | Mask DINO † | 50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| ResNet-50 | **+ PEMOLA** | 50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
 
 ### Panoptic Segmentation on Cityscapes-OLAC
 
-| Backbone | Method | Iter | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
-|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| ResNet-50 | Mask2Former † | 60k | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [training preset](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) | — |
-| ResNet-50 | **+ PEMOLA** | 60k | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [release yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
+| Backbone | Method | Iter | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config / Weights |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| ResNet-50 | Mask2Former † | 60k | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [training preset](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) |
+| ResNet-50 | **+ PEMOLA** | 60k | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 
 The Cityscapes checkpoints use a 60,000-iteration schedule with a global batch size of 24; use their bundled configurations.
 
@@ -80,18 +80,18 @@ Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with back
   <th align="center">Pretraining</th>
   <th align="center">Input</th>
   <th align="center">Top-1 Acc (%)</th>
-  <th align="center">Config</th>
+  <th align="center">Config / Weights</th>
 </tr>
 </thead>
 <tbody>
-<tr><td align="left">ResNet-50</td>       <td align="center">ImageNet-1K</td>       <td align="center">224</td> <td align="center">70.3</td>     <td align="center"><a href="configs/occlusion_cls/resnet/resnet50.yaml">yaml</a></td></tr>
-<tr><td align="left">ResNet-101</td>      <td align="center">ImageNet-1K</td>       <td align="center">224</td> <td align="center">70.8</td>     <td align="center"><a href="configs/occlusion_cls/resnet/resnet101.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-T</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.6</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_tiny_patch4_window7_224_22k.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-S</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.4</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_small_patch4_window7_224_22k.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.7</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window7_224_22k.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K → 1K</td> <td align="center">384</td> <td align="center">75.3</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window12_384_22kto1k_finetune.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-L</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">73.0</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window7_224_22k.yaml">yaml</a></td></tr>
-<tr><td align="left"><b>Swin-L</b></td>    <td align="center">ImageNet-22K → 1K</td> <td align="center">384</td> <td align="center"><b>75.3</b></td> <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window12_384_22kto1k_finetune.yaml">yaml</a></td></tr>
+<tr><td align="left">ResNet-50</td>       <td align="center">ImageNet-1K</td>       <td align="center">224</td> <td align="center">70.3</td>     <td align="center"><a href="configs/occlusion_cls/resnet/resnet50.yaml">config</a></td></tr>
+<tr><td align="left">ResNet-101</td>      <td align="center">ImageNet-1K</td>       <td align="center">224</td> <td align="center">70.8</td>     <td align="center"><a href="configs/occlusion_cls/resnet/resnet101.yaml">config</a></td></tr>
+<tr><td align="left">Swin-T</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.6</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_tiny_patch4_window7_224_22k.yaml">config</a></td></tr>
+<tr><td align="left">Swin-S</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.4</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_small_patch4_window7_224_22k.yaml">config</a></td></tr>
+<tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.7</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window7_224_22k.yaml">config</a></td></tr>
+<tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K → 1K</td> <td align="center">384</td> <td align="center">75.3</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window12_384_22kto1k_finetune.yaml">config</a></td></tr>
+<tr><td align="left">Swin-L</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">73.0</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window7_224_22k.yaml">config</a></td></tr>
+<tr><td align="left"><b>Swin-L</b></td>    <td align="center">ImageNet-22K → 1K</td> <td align="center">384</td> <td align="center"><b>75.3</b></td> <td align="center"><a href="https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/config.yaml">config</a> / <a href="https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth">weights</a></td></tr>
 </tbody>
 </table>
 
@@ -101,13 +101,13 @@ The released [Swin-L 384 checkpoint (`ep29.pth`)](https://huggingface.co/weiwb/P
 
 Download checkpoints and their matching configurations from Hugging Face:
 
-| Model | Model card | Checkpoint | Config |
-|:---|:---:|:---:|:---:|
-| PEMOLA + Mask2Former R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC) | [model_final.pth](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) |
-| PEMOLA + Mask2Former R50 — Cityscapes-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC) | [model_final.pth](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) |
-| Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC) | [model_final.pth](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) |
-| PEMOLA + Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC) | [model_final.pth](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) |
-| Occlusion classifier — Swin-L 384 | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) | [ep29.pth](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/config.yaml) |
+| Model | Model card | Config / Weights |
+| :--- | :---: | :---: |
+| PEMOLA + Mask2Former R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC) | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| PEMOLA + Mask2Former R50 — Cityscapes-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC) | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
+| Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC) | [config](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| PEMOLA + Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC) | [config](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| Occlusion classifier — Swin-L 384 | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) | [config](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth) |
 
 From the PEMOLA repository root, download the files with:
 
