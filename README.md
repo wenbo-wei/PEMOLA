@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="#citation"><img src="https://img.shields.io/badge/Paper-ICME%202026-b31b1b.svg" alt="Paper"></a>
-  <a href="https://huggingface.co/weiwb/PEMOLA"><img src="https://img.shields.io/badge/Hugging%20Face-Weights-yellow.svg" alt="Hugging Face weights"></a>
+  <a href="https://huggingface.co/weiwb/PEMOLA/tree/main"><img src="https://img.shields.io/badge/Hugging%20Face-Weights-yellow.svg" alt="Hugging Face weights"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.12-blue.svg" alt="Python 3.12"></a>
   <a href="https://pytorch.org/"><img src="https://img.shields.io/badge/PyTorch-2.11%2Bcu130-ee4c2c.svg" alt="PyTorch 2.11"></a>
