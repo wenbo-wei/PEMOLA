@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="#citation"><img src="https://img.shields.io/badge/Paper-ICME%202026-b31b1b.svg" alt="Paper"></a>
-  <a href="#pretrained-weights"><img src="https://img.shields.io/badge/Hugging%20Face-Weights-yellow.svg" alt="Hugging Face weights"></a>
+  <a href="https://huggingface.co/weiwb/PEMOLA"><img src="https://img.shields.io/badge/Hugging%20Face-Weights-yellow.svg" alt="Hugging Face weights"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.12-blue.svg" alt="Python 3.12"></a>
   <a href="https://pytorch.org/"><img src="https://img.shields.io/badge/PyTorch-2.11%2Bcu130-ee4c2c.svg" alt="PyTorch 2.11"></a>
@@ -35,7 +35,7 @@
 
 ## News
 
-- [2026-09-20] [Model weights are available on Hugging Face](#pretrained-weights): Mask2Former R50 with and without PEMOLA on COCO-OLAC and Cityscapes-OLAC, Mask DINO R50 with and without PEMOLA on COCO-OLAC, and the Swin-L 384 occlusion classifier.
+- [2026-09] [Model weights are available on Hugging Face](https://huggingface.co/weiwb/PEMOLA): Mask2Former R50 with and without PEMOLA on COCO-OLAC and Cityscapes-OLAC, Mask DINO R50 with and without PEMOLA on COCO-OLAC, and the Swin-L 384 occlusion classifier.
 - [2026-03] Paper accepted to **ICME 2026**.
 
 ## Highlights
@@ -95,7 +95,7 @@ Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with back
 
 ## Pretrained Weights
 
-Download checkpoints and their matching configurations from Hugging Face:
+Browse all released models on the [Hugging Face model hub](https://huggingface.co/weiwb/PEMOLA), or download checkpoints and their matching configurations below:
 
 | Model | Model card | Config / Weights |
 | :--- | :---: | :---: |
