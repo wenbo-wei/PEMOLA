@@ -53,19 +53,19 @@ Segmentation results below use the *full* OLAC validation set; occlusion-subset 
 
 ### Panoptic Segmentation on COCO-OLAC
 
-| Backbone | Method | Epoch | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config / Weights |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| ResNet-50 | Mask2Former † | 50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) |
-| ResNet-50 | **+ PEMOLA** | 50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
-| ResNet-50 | Mask DINO † | 50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
-| ResNet-50 | **+ PEMOLA** | 50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| Backbone | Method | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config / Weights |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| ResNet-50 | Mask2Former † | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) |
+| ResNet-50 | **+ PEMOLA** | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| ResNet-50 | Mask DINO † | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| ResNet-50 | **+ PEMOLA** | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
 
 ### Panoptic Segmentation on Cityscapes-OLAC
 
-| Backbone | Method | Iter | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config / Weights |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| ResNet-50 | Mask2Former † | 60k | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [training preset](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) |
-| ResNet-50 | **+ PEMOLA** | 60k | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
+| Backbone | Method | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config / Weights |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| ResNet-50 | Mask2Former † | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [training preset](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) |
+| ResNet-50 | **+ PEMOLA** | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 
 The Cityscapes checkpoints use a 60,000-iteration schedule with a global batch size of 24; use their bundled configurations.
 
