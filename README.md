@@ -35,7 +35,7 @@
 
 ## News
 
-- [2026-09-20] [Model weights are available on Hugging Face](#pretrained-weights): PEMOLA + Mask2Former R50 on COCO-OLAC and Cityscapes-OLAC, Mask DINO R50 with and without PEMOLA on COCO-OLAC, and the Swin-L 384 occlusion classifier.
+- [2026-09-20] [Model weights are available on Hugging Face](#pretrained-weights): Mask2Former R50 with and without PEMOLA on COCO-OLAC and Cityscapes-OLAC, Mask DINO R50 with and without PEMOLA on COCO-OLAC, and the Swin-L 384 occlusion classifier.
 - [2026-03] Paper accepted to **ICME 2026**.
 
 ## Highlights
@@ -55,7 +55,7 @@ Segmentation results below use the *full* OLAC validation set; occlusion-subset 
 
 | Backbone | Method | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config / Weights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| ResNet-50 | Mask2Former † | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) |
+| ResNet-50 | Mask2Former † | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](https://huggingface.co/weiwb/Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
 | ResNet-50 | **+ PEMOLA** | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
 | ResNet-50 | Mask DINO † | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
 | ResNet-50 | **+ PEMOLA** | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
@@ -64,7 +64,7 @@ Segmentation results below use the *full* OLAC validation set; occlusion-subset 
 
 | Backbone | Method | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config / Weights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| ResNet-50 | Mask2Former † | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [training preset](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) |
+| ResNet-50 | Mask2Former † | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [config](https://huggingface.co/weiwb/Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 | ResNet-50 | **+ PEMOLA** | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 
 The Cityscapes checkpoints use a 60,000-iteration schedule with a global batch size of 24; use their bundled configurations.
@@ -101,7 +101,9 @@ Download checkpoints and their matching configurations from Hugging Face:
 
 | Model | Model card | Config / Weights |
 | :--- | :---: | :---: |
+| Mask2Former R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/Mask2Former-R50-COCO-OLAC) | [config](https://huggingface.co/weiwb/Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
 | PEMOLA + Mask2Former R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC) | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| Mask2Former R50 — Cityscapes-OLAC | [Hugging Face](https://huggingface.co/weiwb/Mask2Former-R50-Cityscapes-OLAC) | [config](https://huggingface.co/weiwb/Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 | PEMOLA + Mask2Former R50 — Cityscapes-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC) | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 | Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC) | [config](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
 | PEMOLA + Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC) | [config](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
@@ -112,8 +114,12 @@ From the PEMOLA repository root, download the files with:
 ```bash
 python -m pip install huggingface_hub
 
+hf download weiwb/Mask2Former-R50-COCO-OLAC \
+    --local-dir checkpoints/mask2former-coco-olac
 hf download weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC \
     --local-dir checkpoints/pemola-coco-olac
+hf download weiwb/Mask2Former-R50-Cityscapes-OLAC \
+    --local-dir checkpoints/mask2former-cityscapes-olac
 hf download weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC \
     --local-dir checkpoints/pemola-cityscapes-olac
 hf download weiwb/MaskDINO-R50-COCO-OLAC \
@@ -255,6 +261,8 @@ python predict.py \
 ```
 
 For `image.jpg`, supply `cam_pt/image.pt` and a JSON entry such as `{"image": "mid"}`. `--input` accepts a single image or a directory. For Cityscapes, use the downloaded `pemola-cityscapes-olac` configuration and weights; the [model card](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC) explains how to align the `_leftImg8bit` filename suffix with CAM and label keys.
+
+For the Mask2Former baselines, use the downloaded `mask2former-coco-olac` or `mask2former-cityscapes-olac` configuration and weights, add `--no-pemola`, and omit `--cam-dir` and `--occlusion-json`.
 
 **Occlusion labels and Grad-CAM inputs:** The [released Swin-L 384 model card](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) provides commands that load `checkpoints/pemola-occlusion-swin-l/ep29.pth` for label prediction and CAM generation. Use an empty label JSON for pure predictions, since the prediction script preserves any supplied labels. CAM generation requires matching original and background-blackened image directories.
 
