@@ -73,7 +73,7 @@ Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with back
 <table>
 <thead>
 <tr>
-  <th align="left">Backbone</th>
+  <th align="left">Method</th>
   <th align="center">Pretraining</th>
   <th align="center">Input</th>
   <th align="center">Top-1 Acc (%)</th>
