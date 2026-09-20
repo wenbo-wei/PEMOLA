@@ -35,7 +35,7 @@
 
 ## News
 
-- [2026-09-20] [Model weights are available on Hugging Face](#pretrained-weights): PEMOLA + Mask2Former R50 on COCO-OLAC and Cityscapes-OLAC, plus the Swin-L 384 occlusion classifier.
+- [2026-09-20] [Model weights are available on Hugging Face](#pretrained-weights): PEMOLA + Mask2Former R50 on COCO-OLAC and Cityscapes-OLAC, Mask DINO R50 with and without PEMOLA on COCO-OLAC, and the Swin-L 384 occlusion classifier.
 - [2026-03] Paper accepted to **ICME 2026**.
 
 ## Highlights
@@ -49,7 +49,7 @@
 ## Model Zoo &amp; Results
 
 `†` denotes our re-trained baseline under identical training schedule for a fair comparison.
-All numbers are panoptic-segmentation metrics on the *full* OLAC validation set (heavily-occluded subset numbers are reported in the paper).
+Segmentation results below use the *full* OLAC validation set; occlusion-subset results are reported in the paper.
 
 ### Panoptic Segmentation on COCO-OLAC
 
@@ -57,8 +57,8 @@ All numbers are panoptic-segmentation metrics on the *full* OLAC validation set 
 |:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | ResNet-50 | Mask2Former † | 50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [yaml](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) | — |
 | ResNet-50 | **+ PEMOLA** | 50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [release yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
-| ResNet-50 | Mask DINO † | 50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | — | — |
-| ResNet-50 | **+ PEMOLA** | 50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | — | — |
+| ResNet-50 | Mask DINO † | 50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [yaml](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| ResNet-50 | **+ PEMOLA** | 50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [yaml](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) |
 
 ### Panoptic Segmentation on Cityscapes-OLAC
 
@@ -67,11 +67,11 @@ All numbers are panoptic-segmentation metrics on the *full* OLAC validation set 
 | ResNet-50 | Mask2Former † | 60k | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [training preset](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) | — |
 | ResNet-50 | **+ PEMOLA** | 60k | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [release yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 
-The archived Cityscapes runs used 60,000 iterations with a global batch size of 24. The `90k` source preset is a different training schedule; use the release configuration with the published checkpoint.
+The Cityscapes checkpoints use a 60,000-iteration schedule with a global batch size of 24; use their bundled configurations.
 
 ### Occlusion Classifier (auxiliary)
 
-Evaluated on the COCO-OLAC three-way (low / mid / high) occlusion-level classification task. Numbers are the reported best-epoch Top-1 accuracies (%) with background-blackened inputs.
+Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with background-blackened inputs, for three-way (low / mid / high) occlusion classification.
 
 <table>
 <thead>
@@ -84,27 +84,29 @@ Evaluated on the COCO-OLAC three-way (low / mid / high) occlusion-level classifi
 </tr>
 </thead>
 <tbody>
-<tr><td align="left">ResNet-50</td>       <td align="center">ImageNet-1K</td>       <td align="center">224</td> <td align="center">70.51</td>     <td align="center"><a href="configs/occlusion_cls/resnet/resnet50.yaml">yaml</a></td></tr>
-<tr><td align="left">ResNet-101</td>      <td align="center">ImageNet-1K</td>       <td align="center">224</td> <td align="center">70.95</td>     <td align="center"><a href="configs/occlusion_cls/resnet/resnet101.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-T</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.63</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_tiny_patch4_window7_224_22k.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-S</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">72.13</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_small_patch4_window7_224_22k.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">72.75</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window7_224_22k.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K → 1K</td> <td align="center">384</td> <td align="center">75.32</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window12_384_22kto1k_finetune.yaml">yaml</a></td></tr>
-<tr><td align="left">Swin-L</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">73.29</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window7_224_22k.yaml">yaml</a></td></tr>
-<tr><td align="left"><b>Swin-L</b></td>    <td align="center">ImageNet-22K → 1K</td> <td align="center">384</td> <td align="center"><b>75.56</b></td> <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window12_384_22kto1k_finetune.yaml">yaml</a></td></tr>
+<tr><td align="left">ResNet-50</td>       <td align="center">ImageNet-1K</td>       <td align="center">224</td> <td align="center">70.3</td>     <td align="center"><a href="configs/occlusion_cls/resnet/resnet50.yaml">yaml</a></td></tr>
+<tr><td align="left">ResNet-101</td>      <td align="center">ImageNet-1K</td>       <td align="center">224</td> <td align="center">70.8</td>     <td align="center"><a href="configs/occlusion_cls/resnet/resnet101.yaml">yaml</a></td></tr>
+<tr><td align="left">Swin-T</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.6</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_tiny_patch4_window7_224_22k.yaml">yaml</a></td></tr>
+<tr><td align="left">Swin-S</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.4</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_small_patch4_window7_224_22k.yaml">yaml</a></td></tr>
+<tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.7</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window7_224_22k.yaml">yaml</a></td></tr>
+<tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K → 1K</td> <td align="center">384</td> <td align="center">75.3</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window12_384_22kto1k_finetune.yaml">yaml</a></td></tr>
+<tr><td align="left">Swin-L</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">73.0</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window7_224_22k.yaml">yaml</a></td></tr>
+<tr><td align="left"><b>Swin-L</b></td>    <td align="center">ImageNet-22K → 1K</td> <td align="center">384</td> <td align="center"><b>75.3</b></td> <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window12_384_22kto1k_finetune.yaml">yaml</a></td></tr>
 </tbody>
 </table>
 
-The released [Swin-L 384 checkpoint (`ep29.pth`)](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth) is the final-epoch checkpoint. Its associated log reports **75.265%** on `coco_olac_cls_test_blackbg`; the **75.56%** best-epoch result above belongs to an earlier checkpoint. See the [model card](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) for preprocessing and usage.
+The released [Swin-L 384 checkpoint (`ep29.pth`)](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth) corresponds to the paper's **75.3%** result. See its [model card](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) for usage.
 
 ## Pretrained Weights
 
-The following checkpoints are publicly available on Hugging Face. Each repository includes the model weights, a compatible `config.yaml`, the license, and a `provenance.json` file with the checkpoint SHA-256 and verification details.
+Download checkpoints and their matching configurations from Hugging Face:
 
 | Model | Model card | Checkpoint | Config |
 |:---|:---:|:---:|:---:|
 | PEMOLA + Mask2Former R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC) | [model_final.pth](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) |
 | PEMOLA + Mask2Former R50 — Cityscapes-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC) | [model_final.pth](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) |
+| Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC) | [model_final.pth](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) |
+| PEMOLA + Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC) | [model_final.pth](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC/resolve/main/config.yaml) |
 | Occlusion classifier — Swin-L 384 | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) | [ep29.pth](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/config.yaml) |
 
 From the PEMOLA repository root, download the files with:
@@ -116,37 +118,27 @@ hf download weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC \
     --local-dir checkpoints/pemola-coco-olac
 hf download weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC \
     --local-dir checkpoints/pemola-cityscapes-olac
+hf download weiwb/MaskDINO-R50-COCO-OLAC \
+    --local-dir checkpoints/maskdino-coco-olac
+hf download weiwb/PEMOLA-MaskDINO-R50-COCO-OLAC \
+    --local-dir checkpoints/pemola-maskdino-coco-olac
 hf download weiwb/PEMOLA-Occlusion-Swin-L-384 \
     --local-dir checkpoints/pemola-occlusion-swin-l
 ```
 
-Use the configuration shipped with each checkpoint. The segmentation release configurations enable `MODEL.PEMOLA.PE_MODULATION` and preserve the corresponding run's training settings.
+Use the configuration shipped with each checkpoint. Mask DINO weights use the dedicated [Mask DINO implementation](https://github.com/wenbo-wei/MaskDINO). The segmentation commands below use this repository's Mask2Former implementation.
 
 **Required inputs:** PEMOLA segmentation uses an image, a per-image CAM tensor, and a `low` / `mid` / `high` occlusion label. The auxiliary classifier supports label prediction and CAM preparation; the current CAM workflow also requires background-blackened images. The [classifier model card](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) provides the preparation commands. See [Inference &amp; Visualization](#inference--visualization) for segmentation usage.
 
 ## Installation
 
-All experiments reported in this paper are conducted on **3× NVIDIA A100 (40 GB)** with **CUDA 13.0**.
-For a fresh installation, replace the bare `panopticapi` entry in `requirements.txt` with `git+https://github.com/cocodataset/panopticapi.git`; the official Panoptic API is installed from GitHub. The installer sets `ARCH=8.9` for an RTX 4090, so adjust it for your target GPU before compiling MSDeformAttn.
-
-Then set up the `pemola` conda environment:
+Set up the `pemola` conda environment with PyTorch, Detectron2, and the MSDeformAttn operator:
 
 ```bash
 bash install_env.sh
 ```
 
-The script installs, in order:
-
-1. A clean conda env (`pemola`, Python **3.12**).
-2. The matched compiler toolchain (`gcc`/`g++` 14) — required because system GCC 15 is too new for `nvcc`.
-3. The full **CUDA toolkit 13.0** (we need `cusparse.h`, which is missing from the slim `cuda-cudart-dev`).
-4. An activation hook that exports `CUDA_HOME` and `TORCH_CUDA_ARCH_LIST=8.9`.
-5. **PyTorch 2.11 + cu130**.
-6. **detectron2 0.6**, built from source.
-7. Python dependencies from `requirements.txt`.
-8. The **MSDeformAttn** CUDA op (patched in-tree for the modern PyTorch API).
-
-Each installer block in `install_env.sh` is idempotent — you can re-run individual sections without rebuilding the whole env.
+Before running the installer, replace `panopticapi` in `requirements.txt` with `git+https://github.com/cocodataset/panopticapi.git`. Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
 
 ## Data Preparation
 
@@ -163,9 +155,10 @@ datasets/data/
 ├── cityscapes_olac/                      # built by tools/prepare_cityscapes_olac.py
 │   ├── leftImg8bit/{train,val}_{low,mid,high}/
 │   └── gtFine/                           # per-level gtFine, panoptic JSONs, occlusion labels
-└── coco_olac_cls/                        # bg-blackened crops for the classifier
-    ├── train/<class>/*.jpg
-    └── val/<class>/*.jpg
+└── coco_olac_cls/
+    ├── train/, val/, test/               # flat image directories
+    ├── train_blackbg/, val_blackbg/, test_blackbg/
+    └── occlusion_label_{train,val,test}.json
 ```
 
 ### Cityscapes-OLAC
@@ -200,7 +193,7 @@ Set `DETECTRON2_DATASETS=datasets/data` (already exported by every script under 
 
 ## Training
 
-All training entry points live under `scripts/`. Each script wraps `train_net.py` (segmentation) or `occ_cls_train.py` (classifier) and reads the corresponding YAML in `configs/`.
+The training scripts under `scripts/` wrap `train_net.py` (Mask2Former) or `occ_cls_train.py` (classifier) and read the corresponding YAML in `configs/`.
 
 ### 1. Occlusion classifier
 
@@ -250,7 +243,7 @@ python train_net.py \
 
 ## Inference &amp; Visualization
 
-**Per-image panoptic prediction** (writes a colourised PNG):
+**Per-image Mask2Former panoptic prediction** (writes a colourised PNG):
 
 ```bash
 python predict.py \
