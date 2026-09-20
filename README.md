@@ -35,7 +35,7 @@
 
 ## News
 
-- [2026-09] [Model weights and configurations are hosted together on Hugging Face](https://huggingface.co/weiwb/PEMOLA).
+- [2026-09] [Model weights and configurations are hosted together on Hugging Face](https://huggingface.co/weiwb/PEMOLA)
 - [2026-03] Paper accepted to **ICME 2026**.
 
 ## Highlights
