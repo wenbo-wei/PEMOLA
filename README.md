@@ -67,11 +67,9 @@ Segmentation results below use the *full* OLAC validation set; occlusion-subset 
 | ResNet-50 | Mask2Former † | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [config](https://huggingface.co/weiwb/Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 | ResNet-50 | **+ PEMOLA** | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) / [weights](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
 
-The Cityscapes checkpoints use a 60,000-iteration schedule with a global batch size of 24; use their bundled configurations.
-
 ### Occlusion Classifier (auxiliary)
 
-Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with background-blackened inputs, for three-way (low / mid / high) occlusion classification.
+Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with background-blackened inputs, for occlusion classification.
 
 <table>
 <thead>
