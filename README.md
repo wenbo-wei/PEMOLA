@@ -23,7 +23,6 @@
 - [News](#news)
 - [Highlights](#highlights)
 - [Model Zoo &amp; Results](#model-zoo--results)
-- [Pretrained Weights](#pretrained-weights)
 - [Installation](#installation)
 - [Data Preparation](#data-preparation)
 - [Training](#training)
@@ -94,19 +93,15 @@ Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with back
 </tbody>
 </table>
 
-## Pretrained Weights
+## Installation
 
-All released weights, configurations, and model cards are hosted in the unified [Hugging Face repository](https://huggingface.co/weiwb/PEMOLA):
+Set up the `pemola` conda environment with PyTorch, Detectron2, and the MSDeformAttn operator:
 
-| Model | Model card | Config | Weights |
-| :--- | :---: | :---: | :---: |
-| Mask2Former R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA/blob/main/mask2former-coco-olac/README.md) | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former-coco-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former-coco-olac/model_final.pth) |
-| PEMOLA + Mask2Former R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-coco-olac/README.md) | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-coco-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-coco-olac/model_final.pth) |
-| Mask2Former R50 — Cityscapes-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA/blob/main/mask2former-cityscapes-olac/README.md) | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former-cityscapes-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former-cityscapes-olac/model_final.pth) |
-| PEMOLA + Mask2Former R50 — Cityscapes-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-cityscapes-olac/README.md) | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-cityscapes-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-cityscapes-olac/model_final.pth) |
-| Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA/blob/main/maskdino-coco-olac/README.md) | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino-coco-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino-coco-olac/model_final.pth) |
-| PEMOLA + Mask DINO R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-maskdino-coco-olac/README.md) | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-maskdino-coco-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-maskdino-coco-olac/model_final.pth) |
-| Occlusion classifier — Swin-L 384 | [Hugging Face](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-occlusion-swin-l/README.md) | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-occlusion-swin-l/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-occlusion-swin-l/ep29.pth) |
+```bash
+bash install_env.sh
+```
+
+Before running the installer, replace `panopticapi` in `requirements.txt` with `git+https://github.com/cocodataset/panopticapi.git`. Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
 
 From the PEMOLA repository root, download all model directories into `checkpoints/`:
 
@@ -117,18 +112,6 @@ hf download weiwb/PEMOLA --local-dir checkpoints
 ```
 
 Use the configuration shipped with each checkpoint. Mask DINO weights use the dedicated [Mask DINO implementation](https://github.com/wenbo-wei/MaskDINO). The segmentation commands below use this repository's Mask2Former implementation.
-
-**Required inputs:** PEMOLA segmentation uses an image, a per-image CAM tensor, and a `low` / `mid` / `high` occlusion label. The auxiliary classifier supports label prediction and CAM preparation; the current CAM workflow also requires background-blackened images. The [classifier model card](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-occlusion-swin-l/README.md) provides the preparation commands. See [Inference &amp; Visualization](#inference--visualization) for segmentation usage.
-
-## Installation
-
-Set up the `pemola` conda environment with PyTorch, Detectron2, and the MSDeformAttn operator:
-
-```bash
-bash install_env.sh
-```
-
-Before running the installer, replace `panopticapi` in `requirements.txt` with `git+https://github.com/cocodataset/panopticapi.git`. Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
 
 ## Data Preparation
 
@@ -232,6 +215,8 @@ python train_net.py \
 ```
 
 ## Inference &amp; Visualization
+
+**Required inputs:** PEMOLA segmentation uses an image, a per-image CAM tensor, and a `low` / `mid` / `high` occlusion label. The auxiliary classifier supports label prediction and CAM preparation; the current CAM workflow also requires background-blackened images. The [classifier model card](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-occlusion-swin-l/README.md) provides the preparation commands.
 
 **Per-image Mask2Former panoptic prediction** (writes a colourised PNG):
 
