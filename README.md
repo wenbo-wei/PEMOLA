@@ -52,21 +52,21 @@ Segmentation results below use the *full* OLAC validation set; occlusion-subset 
 
 ### Panoptic Segmentation on COCO-OLAC
 
-| Backbone | Method | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
+| Method | Backbone | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| ResNet-50 | Mask2Former † | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_coco_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_coco_olac.pth) |
-| ResNet-50 | **+ PEMOLA** | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_coco_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_coco_olac.pth) |
-| ResNet-50 | Mask DINO † | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_coco_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_coco_olac.pth) |
-| ResNet-50 | **+ PEMOLA** | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_pemola_coco_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_pemola_coco_olac.pth) |
+| Mask2Former † | ResNet-50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_coco_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_coco_olac.pth) |
+| **+ PEMOLA** | ResNet-50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_coco_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_coco_olac.pth) |
+| Mask DINO † | ResNet-50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_coco_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_coco_olac.pth) |
+| **+ PEMOLA** | ResNet-50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_pemola_coco_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_pemola_coco_olac.pth) |
 
 ### Panoptic Segmentation on Cityscapes-OLAC
 
-| Backbone | Method | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
+| Method | Backbone | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| ResNet-50 | Mask2Former † | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_cityscapes_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_cityscapes_olac.pth) |
-| ResNet-50 | **+ PEMOLA** | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_cityscapes_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_cityscapes_olac.pth) |
+| Mask2Former † | ResNet-50 | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_cityscapes_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_cityscapes_olac.pth) |
+| **+ PEMOLA** | ResNet-50 | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_cityscapes_olac/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_cityscapes_olac.pth) |
 
-### Occlusion Classifier (auxiliary)
+### Occlusion Classifier
 
 Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with background-blackened inputs, for occlusion classification.
 
