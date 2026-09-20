@@ -35,7 +35,7 @@
 
 ## News
 
-- [2026-09] [Model weights and configurations are hosted together on Hugging Face](https://huggingface.co/weiwb/PEMOLA): Mask2Former R50 with and without PEMOLA on COCO-OLAC and Cityscapes-OLAC, Mask DINO R50 with and without PEMOLA on COCO-OLAC, and the Swin-L 384 occlusion classifier.
+- [2026-09] [Model weights and configurations are hosted together on Hugging Face](https://huggingface.co/weiwb/PEMOLA).
 - [2026-03] Paper accepted to **ICME 2026**.
 
 ## Highlights
