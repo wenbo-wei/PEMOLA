@@ -123,7 +123,7 @@ datasets/data/
 ├── coco_olac/
 │   ├── train/, val/                      # RGB images
 │   ├── annotations/                      # panoptic + instance JSONs
-│   └── occlusion_label_{train,val}.json  # per-instance occlusion level
+│   └── occlusion_label_{train,val}.json  # per-image occlusion level
 ├── cityscapes/                           # official Cityscapes (leftImg8bit/, gtFine/)
 ├── cityscapes_olac/                      # built by tools/prepare_cityscapes_olac.py
 │   ├── leftImg8bit/{train,val}_{low,mid,high}/
@@ -151,8 +151,8 @@ CITYSCAPES_DATASET=datasets/data/cityscapes \
 python tools/prepare_cityscapes_olac.py
 ```
 
-For the **occlusion classifier**, training images are pre-processed by blackening non-object regions
-(this restricts the classifier's receptive field to the instance and removes scene-context bias):
+For the **occlusion classifier**, each image has one occlusion-level label.
+Training images are pre-processed by blackening non-object regions:
 
 ```bash
 python tools/blacken_bg.py \
