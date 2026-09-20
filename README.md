@@ -9,6 +9,7 @@
 
 <p align="center">
   <a href="#citation"><img src="https://img.shields.io/badge/Paper-ICME%202026-b31b1b.svg" alt="Paper"></a>
+  <a href="#pretrained-weights"><img src="https://img.shields.io/badge/Hugging%20Face-Weights-yellow.svg" alt="Hugging Face weights"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.12-blue.svg" alt="Python 3.12"></a>
   <a href="https://pytorch.org/"><img src="https://img.shields.io/badge/PyTorch-2.11%2Bcu130-ee4c2c.svg" alt="PyTorch 2.11"></a>
@@ -18,9 +19,11 @@
 <p align="center"><img src="assets/architecture.png" width="900" alt="PEMOLA architecture"></p>
 
 ## Table of Contents
+
 - [News](#news)
 - [Highlights](#highlights)
 - [Model Zoo &amp; Results](#model-zoo--results)
+- [Pretrained Weights](#pretrained-weights)
 - [Installation](#installation)
 - [Data Preparation](#data-preparation)
 - [Training](#training)
@@ -31,6 +34,8 @@
 - [License](#license)
 
 ## News
+
+- [2026-09-20] [Model weights are available on Hugging Face](#pretrained-weights): PEMOLA + Mask2Former R50 on COCO-OLAC and Cityscapes-OLAC, plus the Swin-L 384 occlusion classifier.
 - [2026-03] Paper accepted to **ICME 2026**.
 
 ## Highlights
@@ -48,23 +53,25 @@ All numbers are panoptic-segmentation metrics on the *full* OLAC validation set 
 
 ### Panoptic Segmentation on COCO-OLAC
 
-| Backbone | Method | Epoch | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config |
-|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| ResNet-50 | Mask2Former † | 50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [yaml](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) |
-| ResNet-50 | **+ PEMOLA** | 50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [yaml](configs/coco_olac/panoptic-segmentation/pemola_R50_bs16_50ep.yaml) |
-| ResNet-50 | Mask DINO † | 50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | — |
-| ResNet-50 | **+ PEMOLA** | 50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | — |
+| Backbone | Method | Epoch | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| ResNet-50 | Mask2Former † | 50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [yaml](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) | — |
+| ResNet-50 | **+ PEMOLA** | 50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [release yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) |
+| ResNet-50 | Mask DINO † | 50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | — | — |
+| ResNet-50 | **+ PEMOLA** | 50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | — | — |
 
 ### Panoptic Segmentation on Cityscapes-OLAC
 
-| Backbone | Method | Iter | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config |
-|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| ResNet-50 | Mask2Former † | 90k | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [yaml](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) |
-| ResNet-50 | **+ PEMOLA** | 90k | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [yaml](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) |
+| Backbone | Method | Iter | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| ResNet-50 | Mask2Former † | 60k | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [training preset](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) | — |
+| ResNet-50 | **+ PEMOLA** | 60k | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [release yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) | [download](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) |
+
+The archived Cityscapes runs used 60,000 iterations with a global batch size of 24. The `90k` source preset is a different training schedule; use the release configuration with the published checkpoint.
 
 ### Occlusion Classifier (auxiliary)
 
-Evaluated on the COCO-OLAC three-way (low / mid / high) occlusion-level classification task. Numbers are best-epoch Top-1 accuracy (%) on the validation split with background-blackened inputs.
+Evaluated on the COCO-OLAC three-way (low / mid / high) occlusion-level classification task. Numbers are the reported best-epoch Top-1 accuracies (%) with background-blackened inputs.
 
 <table>
 <thead>
@@ -88,10 +95,41 @@ Evaluated on the COCO-OLAC three-way (low / mid / high) occlusion-level classifi
 </tbody>
 </table>
 
+The released [Swin-L 384 checkpoint (`ep29.pth`)](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth) is the final-epoch checkpoint. Its associated log reports **75.265%** on `coco_olac_cls_test_blackbg`; the **75.56%** best-epoch result above belongs to an earlier checkpoint. See the [model card](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) for preprocessing and usage.
+
+## Pretrained Weights
+
+The following checkpoints are publicly available on Hugging Face. Each repository includes the model weights, a compatible `config.yaml`, the license, and a `provenance.json` file with the checkpoint SHA-256 and verification details.
+
+| Model | Model card | Checkpoint | Config |
+|:---|:---:|:---:|:---:|
+| PEMOLA + Mask2Former R50 — COCO-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC) | [model_final.pth](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC/resolve/main/config.yaml) |
+| PEMOLA + Mask2Former R50 — Cityscapes-OLAC | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC) | [model_final.pth](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/model_final.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC/resolve/main/config.yaml) |
+| Occlusion classifier — Swin-L 384 | [Hugging Face](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) | [ep29.pth](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth) | [yaml](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/config.yaml) |
+
+From the PEMOLA repository root, download the files with:
+
+```bash
+python -m pip install huggingface_hub
+
+hf download weiwb/PEMOLA-Mask2Former-R50-COCO-OLAC \
+    --local-dir checkpoints/pemola-coco-olac
+hf download weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC \
+    --local-dir checkpoints/pemola-cityscapes-olac
+hf download weiwb/PEMOLA-Occlusion-Swin-L-384 \
+    --local-dir checkpoints/pemola-occlusion-swin-l
+```
+
+Use the configuration shipped with each checkpoint. The segmentation release configurations enable `MODEL.PEMOLA.PE_MODULATION` and preserve the corresponding run's training settings.
+
+**Required inputs:** PEMOLA segmentation uses an image, a per-image CAM tensor, and a `low` / `mid` / `high` occlusion label. The auxiliary classifier supports label prediction and CAM preparation; the current CAM workflow also requires background-blackened images. The [classifier model card](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) provides the preparation commands. See [Inference &amp; Visualization](#inference--visualization) for segmentation usage.
+
 ## Installation
 
 All experiments reported in this paper are conducted on **3× NVIDIA A100 (40 GB)** with **CUDA 13.0**.
-A single command sets up the `pemola` conda environment:
+For a fresh installation, replace the bare `panopticapi` entry in `requirements.txt` with `git+https://github.com/cocodataset/panopticapi.git`; the official Panoptic API is installed from GitHub. The installer sets `ARCH=8.9` for an RTX 4090, so adjust it for your target GPU before compiling MSDeformAttn.
+
+Then set up the `pemola` conda environment:
 
 ```bash
 bash install_env.sh
@@ -199,36 +237,35 @@ bash scripts/eval_pemola_olac_swin.sh      # Swin-L
 bash scripts/eval_base_city_r50.sh         # Cityscapes-OLAC baseline
 ```
 
-Each eval script expects the trained checkpoint at `output/<run>/model_final.pth`.
-Override on the command line, e.g.:
+The wrapper scripts use their configured `output/` checkpoint paths. To evaluate the downloaded COCO-OLAC checkpoint after preparing the dataset, CAMs, and occlusion labels, invoke the entry point directly:
 
 ```bash
-bash scripts/eval_pemola_olac_r50.sh MODEL.WEIGHTS /path/to/model_final.pth
+export DETECTRON2_DATASETS=datasets/data
+python train_net.py \
+    --config-file checkpoints/pemola-coco-olac/config.yaml \
+    --num-gpus 1 \
+    --eval-only \
+    MODEL.WEIGHTS checkpoints/pemola-coco-olac/model_final.pth
 ```
 
 ## Inference &amp; Visualization
 
-**Per-image panoptic prediction** (writes a colourised PNG and the raw segments JSON):
+**Per-image panoptic prediction** (writes a colourised PNG):
 
 ```bash
 python predict.py \
-    --config-file configs/coco_olac/panoptic-segmentation/pemola_R50_bs16_50ep.yaml \
-    --input  <image_or_glob> \
-    --output <out_dir> \
-    --opts MODEL.WEIGHTS output/pemola/model_final.pth
+    --config checkpoints/pemola-coco-olac/config.yaml \
+    --weights checkpoints/pemola-coco-olac/model_final.pth \
+    --input /path/to/image.jpg \
+    --output-dir output/pemola-predictions \
+    --cam-dir /path/to/cam_pt \
+    --occlusion-json /path/to/occlusion_labels.json \
+    --format png
 ```
 
-**Occlusion classifier inference** (per-instance occlusion level):
+For `image.jpg`, supply `cam_pt/image.pt` and a JSON entry such as `{"image": "mid"}`. `--input` accepts a single image or a directory. For Cityscapes, use the downloaded `pemola-cityscapes-olac` configuration and weights; the [model card](https://huggingface.co/weiwb/PEMOLA-Mask2Former-R50-Cityscapes-OLAC) explains how to align the `_leftImg8bit` filename suffix with CAM and label keys.
 
-```bash
-bash scripts/occ_cls_predict.sh
-```
-
-**Grad-CAM visualisation of the occlusion attention map** — the spatial signal that PEMOLA injects into the position embedding:
-
-```bash
-bash scripts/occ_cls_draw_cam.sh
-```
+**Occlusion labels and Grad-CAM inputs:** The [released Swin-L 384 model card](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) provides commands that load `checkpoints/pemola-occlusion-swin-l/ep29.pth` for label prediction and CAM generation. Use an empty label JSON for pure predictions, since the prediction script preserves any supplied labels. CAM generation requires matching original and background-blackened image directories.
 
 ## Citation
 
