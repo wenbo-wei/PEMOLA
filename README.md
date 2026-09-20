@@ -95,8 +95,6 @@ Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with back
 </tbody>
 </table>
 
-The released [Swin-L 384 checkpoint (`ep29.pth`)](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384/resolve/main/ep29.pth) corresponds to the paper's **75.3%** result. See its [model card](https://huggingface.co/weiwb/PEMOLA-Occlusion-Swin-L-384) for usage.
-
 ## Pretrained Weights
 
 Download checkpoints and their matching configurations from Hugging Face:
