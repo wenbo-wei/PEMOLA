@@ -54,17 +54,17 @@ Segmentation results below use the *full* OLAC validation set; occlusion-subset 
 
 | Backbone | Method | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| ResNet-50 | Mask2Former † | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former-coco-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former-coco-olac/model_final.pth) |
-| ResNet-50 | **+ PEMOLA** | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-coco-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-coco-olac/model_final.pth) |
-| ResNet-50 | Mask DINO † | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino-coco-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino-coco-olac/model_final.pth) |
-| ResNet-50 | **+ PEMOLA** | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-maskdino-coco-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-maskdino-coco-olac/model_final.pth) |
+| ResNet-50 | Mask2Former † | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_coco_olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_coco_olac/mask2former_coco_olac.pth) |
+| ResNet-50 | **+ PEMOLA** | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_coco_olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_coco_olac/mask2former_pemola_coco_olac.pth) |
+| ResNet-50 | Mask DINO † | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_coco_olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_coco_olac/maskdino_coco_olac.pth) |
+| ResNet-50 | **+ PEMOLA** | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_pemola_coco_olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_pemola_coco_olac/maskdino_pemola_coco_olac.pth) |
 
 ### Panoptic Segmentation on Cityscapes-OLAC
 
 | Backbone | Method | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| ResNet-50 | Mask2Former † | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former-cityscapes-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former-cityscapes-olac/model_final.pth) |
-| ResNet-50 | **+ PEMOLA** | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-cityscapes-olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-cityscapes-olac/model_final.pth) |
+| ResNet-50 | Mask2Former † | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_cityscapes_olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_cityscapes_olac/mask2former_cityscapes_olac.pth) |
+| ResNet-50 | **+ PEMOLA** | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_cityscapes_olac/config.yaml) | [weights](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_cityscapes_olac/mask2former_pemola_cityscapes_olac.pth) |
 
 ### Occlusion Classifier (auxiliary)
 
@@ -89,7 +89,7 @@ Top-1 accuracies (%) reported in the paper on the COCO-OLAC test split with back
 <tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">71.7</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window7_224_22k.yaml">config</a></td><td align="center">—</td></tr>
 <tr><td align="left">Swin-B</td>          <td align="center">ImageNet-22K</td> <td align="center">384</td> <td align="center">75.3</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_base_patch4_window12_384_22kto1k_finetune.yaml">config</a></td><td align="center">—</td></tr>
 <tr><td align="left">Swin-L</td>          <td align="center">ImageNet-22K</td>      <td align="center">224</td> <td align="center">73.0</td>     <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window7_224_22k.yaml">config</a></td><td align="center">—</td></tr>
-<tr><td align="left"><b>Swin-L</b></td>    <td align="center">ImageNet-22K</td> <td align="center">384</td> <td align="center"><b>75.3</b></td> <td align="center"><a href="https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-occlusion-swin-l/config.yaml">config</a></td><td align="center"><a href="https://huggingface.co/weiwb/PEMOLA/resolve/main/pemola-occlusion-swin-l/ep29.pth">weights</a></td></tr>
+<tr><td align="left"><b>Swin-L</b></td>    <td align="center">ImageNet-22K</td> <td align="center">384</td> <td align="center"><b>75.3</b></td> <td align="center"><a href="https://huggingface.co/weiwb/PEMOLA/resolve/main/swin_l_384_occlusion_coco_olac/config.yaml">config</a></td><td align="center"><a href="https://huggingface.co/weiwb/PEMOLA/resolve/main/swin_l_384_occlusion_coco_olac/swin_l_384_occlusion_coco_olac.pth">weights</a></td></tr>
 </tbody>
 </table>
 
@@ -208,22 +208,22 @@ The wrapper scripts use their configured `output/` checkpoint paths. To evaluate
 ```bash
 export DETECTRON2_DATASETS=datasets/data
 python train_net.py \
-    --config-file checkpoints/pemola-coco-olac/config.yaml \
+    --config-file checkpoints/mask2former_pemola_coco_olac/config.yaml \
     --num-gpus 1 \
     --eval-only \
-    MODEL.WEIGHTS checkpoints/pemola-coco-olac/model_final.pth
+    MODEL.WEIGHTS checkpoints/mask2former_pemola_coco_olac/mask2former_pemola_coco_olac.pth
 ```
 
 ## Inference &amp; Visualization
 
-**Required inputs:** PEMOLA segmentation uses an image, a per-image CAM tensor, and a `low` / `mid` / `high` occlusion label. The auxiliary classifier supports label prediction and CAM preparation; the current CAM workflow also requires background-blackened images. The [classifier model card](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-occlusion-swin-l/README.md) provides the preparation commands.
+**Required inputs:** PEMOLA segmentation uses an image, a per-image CAM tensor, and a `low` / `mid` / `high` occlusion label. The auxiliary classifier supports label prediction and CAM preparation; the current CAM workflow also requires background-blackened images. The [classifier model card](https://huggingface.co/weiwb/PEMOLA/blob/main/swin_l_384_occlusion_coco_olac/README.md) provides the preparation commands.
 
 **Per-image Mask2Former panoptic prediction** (writes a colourised PNG):
 
 ```bash
 python predict.py \
-    --config checkpoints/pemola-coco-olac/config.yaml \
-    --weights checkpoints/pemola-coco-olac/model_final.pth \
+    --config checkpoints/mask2former_pemola_coco_olac/config.yaml \
+    --weights checkpoints/mask2former_pemola_coco_olac/mask2former_pemola_coco_olac.pth \
     --input /path/to/image.jpg \
     --output-dir output/pemola-predictions \
     --cam-dir /path/to/cam_pt \
@@ -231,11 +231,11 @@ python predict.py \
     --format png
 ```
 
-For `image.jpg`, supply `cam_pt/image.pt` and a JSON entry such as `{"image": "mid"}`. `--input` accepts a single image or a directory. For Cityscapes, use the downloaded `pemola-cityscapes-olac` configuration and weights; the [model card](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-cityscapes-olac/README.md) explains how to align the `_leftImg8bit` filename suffix with CAM and label keys.
+For `image.jpg`, supply `cam_pt/image.pt` and a JSON entry such as `{"image": "mid"}`. `--input` accepts a single image or a directory. For Cityscapes, use the downloaded `mask2former_pemola_cityscapes_olac` configuration and weights; the [model card](https://huggingface.co/weiwb/PEMOLA/blob/main/mask2former_pemola_cityscapes_olac/README.md) explains how to align the `_leftImg8bit` filename suffix with CAM and label keys.
 
-For the Mask2Former baselines, use the downloaded `mask2former-coco-olac` or `mask2former-cityscapes-olac` configuration and weights, add `--no-pemola`, and omit `--cam-dir` and `--occlusion-json`.
+For the Mask2Former baselines, use the downloaded `mask2former_coco_olac` or `mask2former_cityscapes_olac` configuration and weights, add `--no-pemola`, and omit `--cam-dir` and `--occlusion-json`.
 
-**Occlusion labels and Grad-CAM inputs:** The [released Swin-L 384 model card](https://huggingface.co/weiwb/PEMOLA/blob/main/pemola-occlusion-swin-l/README.md) provides commands that load `checkpoints/pemola-occlusion-swin-l/ep29.pth` for label prediction and CAM generation. Use an empty label JSON for pure predictions, since the prediction script preserves any supplied labels. CAM generation requires matching original and background-blackened image directories.
+**Occlusion labels and Grad-CAM inputs:** The [released Swin-L 384 model card](https://huggingface.co/weiwb/PEMOLA/blob/main/swin_l_384_occlusion_coco_olac/README.md) provides commands that load `checkpoints/swin_l_384_occlusion_coco_olac/swin_l_384_occlusion_coco_olac.pth` for label prediction and CAM generation. Use an empty label JSON for pure predictions, since the prediction script preserves any supplied labels. CAM generation requires matching original and background-blackened image directories.
 
 ## Citation
 
