@@ -46,7 +46,6 @@
 ## Model Zoo &amp; Results
 
 `†` denotes our re-trained baseline under identical training schedule for a fair comparison.
-Segmentation results below use the *full* OLAC validation set; occlusion-subset results are reported in the paper.
 
 ### Panoptic Segmentation on COCO-OLAC
 
