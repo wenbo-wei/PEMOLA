@@ -90,13 +90,13 @@ All experiments reported in this paper are conducted on 3× NVIDIA A100 (40 GB).
 
 ## Installation
 
-Set up the `pemola` conda environment with PyTorch, Detectron2, and the MSDeformAttn operator:
+A single command sets up the `pemola` conda environment:
 
 ```bash
 bash install_env.sh
 ```
 
-Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
+**Note:** Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
 
 From the PEMOLA repository root, download all model directories into `checkpoints/`:
 
