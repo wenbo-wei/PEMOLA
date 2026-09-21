@@ -47,6 +47,14 @@
 
 All experiments reported in this paper are conducted on 3× NVIDIA A100 (40 GB). `†` denotes our re-trained baseline under identical training schedule for a fair comparison.
 
+From the PEMOLA repository root, download all model directories into `checkpoints/`:
+
+```bash
+python -m pip install huggingface_hub
+
+hf download weiwb/PEMOLA --local-dir checkpoints
+```
+
 ### Panoptic Segmentation on COCO-OLAC
 
 | Method | Backbone | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
@@ -97,14 +105,6 @@ bash install_env.sh
 ```
 
 **Note:** Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
-
-From the PEMOLA repository root, download all model directories into `checkpoints/`:
-
-```bash
-python -m pip install huggingface_hub
-
-hf download weiwb/PEMOLA --local-dir checkpoints
-```
 
 Use the configuration shipped with each checkpoint. Mask DINO weights use the dedicated [Mask DINO implementation](https://github.com/wenbo-wei/MaskDINO). The segmentation commands below use this repository's Mask2Former implementation.
 
