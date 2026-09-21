@@ -123,13 +123,26 @@ The datasets should be placed under `datasets/data/` following the structure bel
 ```
 datasets/data/
 ├── coco_olac/
-│   ├── train/, val/                      # RGB images
-│   ├── annotations/                      # panoptic + instance JSONs
-│   └── occlusion_label_{train,val}.json  # per-image occlusion level
+│   ├── train/
+│   │   ├── train/                       # RGB images
+│   │   ├── train_blackbg/               # background-blackened images for CAM
+│   │   ├── panoptic_train/, panoptic_semseg_train/
+│   │   ├── annotations/{instances,panoptic}_train.json
+│   │   └── occlusion_label_train.json
+│   ├── val/
+│   │   ├── val/
+│   │   ├── val_blackbg/
+│   │   ├── panoptic_val/, panoptic_semseg_val/
+│   │   ├── annotations/{instances,panoptic}_val.json
+│   │   └── occlusion_label_val.json
+│   └── val_{low,mid,high}/              # per-level RGB images, masks, annotations and labels
+├── coco_olac_cam/
+│   └── cam_pt_{train,val}/              # CAM tensors used by PEMOLA
 ├── cityscapes_olac/                      # complete splits + occlusion-level subsets
 │   ├── leftImg8bit/
-│   │   ├── train/, val/                  # complete RGB images (2975 / 500)
-│   │   └── {train,val}_{low,mid,high}/    # RGB images by occlusion level
+│   │   ├── train/, val/                  # city subdirectories; 2975 / 500 RGB images
+│   │   ├── {train,val}_{low,mid,high}/    # RGB images by occlusion level
+│   │   └── {train,val}_blackbg/          # generated separately for classifier / CAM
 │   └── gtFine/
 │       ├── train/, val/                  # complete annotations, including labelTrainIds
 │       ├── {train,val}_{low,mid,high}/    # annotations by occlusion level
@@ -145,6 +158,12 @@ datasets/data/
     ├── train_blackbg/, val_blackbg/, test_blackbg/
     └── occlusion_label_{train,val,test}.json
 ```
+
+The tree lists the inputs used by training, evaluation, and CAM preparation. Braces denote separate names;
+for example, `cam_pt_{train,val}` means `cam_pt_train/` and `cam_pt_val/`.
+`datasets/data/` is local storage (a directory or symlink) and is excluded from Git.
+The repository-provided Cityscapes-OLAC label JSONs are stored separately in
+[`datasets/cityscapes_olac/`](datasets/cityscapes_olac).
 
 ### Cityscapes-OLAC
 
@@ -171,18 +190,27 @@ Omit `--copy` to use symlinks instead; the official source must then remain avai
 The full splits are registered as `cityscapes_olac_panoptic_train` and `cityscapes_olac_panoptic_val`;
 append `_low`, `_mid`, or `_high` for evaluation by occlusion level.
 
-For the **occlusion classifier**, each image has one occlusion-level label.
-Training images are pre-processed by blackening non-object regions:
+### Background-blackened images
+
+The **occlusion classifier** uses the separate `coco_olac_cls` splits, with one occlusion-level label per image.
+Its training loader reads `coco_olac_cls/train_blackbg/`; keep the original images in `coco_olac_cls/train/`.
+CAM preparation pairs each segmentation image with its background-blackened counterpart.
+For example, generate the COCO-OLAC training counterparts under `coco_olac/train/train_blackbg/`:
 
 ```bash
 python tools/blacken_bg.py \
     --dataset    coco \
-    --data_path  datasets/data/coco/train2017 \
-    --ann_path   datasets/data/coco/annotations/instances_train2017.json \
-    --output_path datasets/data/coco_olac_cls/train
+    --data_path  datasets/data/coco_olac/train/train \
+    --ann_path   datasets/data/coco_olac/train/annotations/instances_train.json \
+    --output     datasets/data/coco_olac/train/train_blackbg
 ```
 
-Set `DETECTRON2_DATASETS=datasets/data` (already exported by every script under `scripts/`) so that detectron2 resolves dataset paths correctly.
+Use the corresponding validation paths for `coco_olac/val/val_blackbg/`.
+Prepare the classifier's `*_blackbg` folders using its own train / val / test image assignments and label JSONs.
+
+Set `DETECTRON2_DATASETS=datasets/data` so that Detectron2 resolves dataset paths correctly.
+The segmentation training, evaluation, and prediction scripts under `scripts/` already export it;
+classifier scripts use their explicit `--data_path`.
 
 ## Training
 
