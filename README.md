@@ -47,7 +47,7 @@
 
 All experiments reported in this paper are conducted on 3× NVIDIA A100 (40 GB). `†` denotes our re-trained baseline under identical training schedule for a fair comparison.
 
-From the PEMOLA repository root, download weights into `checkpoints/`:
+From the PEMOLA repository root, download all model weights into `checkpoints/`:
 
 ```bash
 python -m pip install huggingface_hub
