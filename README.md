@@ -271,7 +271,5 @@ We thank the authors of these works for releasing their code.
 
 ## License
 
-This project is released under the **MIT License** — see [LICENSE](LICENSE) for the full text.
+This project is released under [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE).
 Code adapted from third-party projects retains its original licence and copyright notice.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
