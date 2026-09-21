@@ -45,6 +45,8 @@
 
 ## Model Zoo &amp; Results
 
+All experiments reported in this paper are conducted on 3× NVIDIA A100 (40 GB).
+
 `†` denotes our re-trained baseline under identical training schedule for a fair comparison.
 
 ### Panoptic Segmentation on COCO-OLAC
@@ -89,8 +91,6 @@
 </table>
 
 ## Installation
-
-All experiments reported in this paper are conducted on 3× NVIDIA A100 (40 GB).
 
 Set up the `pemola` conda environment with PyTorch, Detectron2, and the MSDeformAttn operator:
 
