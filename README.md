@@ -118,7 +118,7 @@ bash install_env.sh
 ## Data Preparation
 
 PEMOLA is evaluated on **COCO-OLAC** ([Wei *et al.*, 2025](https://github.com/wenbo-wei/COCO-OLAC)) and **Cityscapes-OLAC** (introduced in this work).
-Prepare the datasets under `datasets/data/`:
+The datasets should be placed under `datasets/data/` following the directory structure below:
 
 ```
 datasets/data/
