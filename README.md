@@ -258,7 +258,7 @@ For the **COCO-OLAC** benchmark used in our experiments, please also cite:
 
 ## Acknowledgements
 
-PEMOLA is built on top of the following excellent open-source projects.
+PEMOLA is built on top of the following open-source projects.
 Modified portions retain the original copyright headers, in accordance with each project's licence.
 
 - [**Mask2Former**](https://github.com/facebookresearch/Mask2Former) (Meta, MIT) — base panoptic framework.
