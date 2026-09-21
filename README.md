@@ -49,14 +49,6 @@ All experiments reported in this paper are conducted on 3× NVIDIA A100 (40 GB).
 
 `†` denotes our re-trained baseline under identical training schedule for a fair comparison.
 
-From the PEMOLA repository root, download all model weights into `checkpoints/`:
-
-```bash
-python -m pip install huggingface_hub
-
-hf download weiwb/PEMOLA --local-dir checkpoints
-```
-
 ### Panoptic Segmentation on COCO-OLAC
 
 | Method | Backbone | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
@@ -97,6 +89,14 @@ hf download weiwb/PEMOLA --local-dir checkpoints
 <tr><td align="left"><b>Swin-L</b></td>    <td align="center">ImageNet-22K</td> <td align="center">384</td> <td align="center"><b>75.3</b></td> <td align="center"><a href="configs/occlusion_cls/swin/swin_large_patch4_window12_384_22kto1k_finetune.yaml">config</a></td><td align="center"><a href="https://huggingface.co/weiwb/PEMOLA/resolve/main/occl_classifier_swin_large_window12_384_coco_olac.pth">download</a></td></tr>
 </tbody>
 </table>
+
+From the PEMOLA repository root, download all model weights into `checkpoints/`:
+
+```bash
+python -m pip install huggingface_hub
+
+hf download weiwb/PEMOLA --local-dir checkpoints
+```
 
 ## Installation
 
