@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="#citation"><img src="https://img.shields.io/badge/Paper-ICME%202026-b31b1b.svg" alt="Paper"></a>
-  <a href="https://huggingface.co/weiwb/PEMOLA/tree/main"><img src="https://img.shields.io/badge/Hugging%20Face-Weights-yellow.svg" alt="Hugging Face weights"></a>
+  <a href="https://huggingface.co/weiwb/PEMOLA/tree/main"><img src="https://img.shields.io/badge/Hugging%20Face-555.svg?logo=huggingface&amp;logoColor=FFD21E" alt="Hugging Face"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.12-blue.svg" alt="Python 3.12"></a>
   <a href="https://pytorch.org/"><img src="https://img.shields.io/badge/PyTorch-2.11%2Bcu130-ee4c2c.svg" alt="PyTorch 2.11"></a>
@@ -41,8 +41,7 @@
 
 - **Plug-and-play.** Drops into any transformer-based panoptic segmenter (Mask2Former, Mask DINO) without architectural changes to the backbone or mask decoder.
 - **Occlusion-aware queries.** Combines spatial (Grad-CAM) and channel-wise (label embedding) occlusion cues directly at the joint position embedding.
-- **Lightweight.** A single classifier forward pass + one modulation step per query at inference, <1% added FLOPs.
-- **Backbone-agnostic.** Validated end-to-end on ResNet-50. Drop-in configs for ResNet-101 and Swin-T/S/B/L are included for easy extension.
+- **Lightweight.** <1% added FLOPs.
 - **Generalises across datasets.** Improves PQ on both **COCO-OLAC** and the newly annotated **Cityscapes-OLAC**, with the largest gains on the heavily-occluded subset.
 
 ## Model Zoo &amp; Results
