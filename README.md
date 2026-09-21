@@ -90,13 +90,15 @@
 
 ## Installation
 
+All experiments reported in this paper are conducted on 3× NVIDIA A100 (40 GB).
+
 Set up the `pemola` conda environment with PyTorch, Detectron2, and the MSDeformAttn operator:
 
 ```bash
 bash install_env.sh
 ```
 
-Before running the installer, replace `panopticapi` in `requirements.txt` with `git+https://github.com/cocodataset/panopticapi.git`. Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
+Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
 
 From the PEMOLA repository root, download all model directories into `checkpoints/`:
 

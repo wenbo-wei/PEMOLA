@@ -16,7 +16,7 @@ timm
 
 # COCO / panoptic evaluation
 pycocotools
-panopticapi
+git+https://github.com/cocodataset/panopticapi.git
 
 # CAM visualization (occ_cls_draw_cam.py)
 grad-cam
