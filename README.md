@@ -51,17 +51,17 @@
 
 | Method | Backbone | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Mask2Former † | ResNet-50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](configs/checkpoints/mask2former_coco_olac.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_coco_olac.pth) |
-| **+ PEMOLA** | ResNet-50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](configs/checkpoints/mask2former_pemola_coco_olac.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_coco_olac.pth) |
-| Mask DINO † | ResNet-50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](configs/checkpoints/maskdino_coco_olac.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_coco_olac.pth) |
-| **+ PEMOLA** | ResNet-50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](configs/checkpoints/maskdino_pemola_coco_olac.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_pemola_coco_olac.pth) |
+| Mask2Former † | ResNet-50 | 40.7 | 44.5 | 35.0 | 30.0 | 54.2 | [config](configs/coco_olac/panoptic-segmentation/mask2former_COCO-OLAC_R50_bs16_50ep.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_coco_olac.pth) |
+| **+ PEMOLA** | ResNet-50 | **41.5** | **45.2** | **35.9** | **30.4** | **54.8** | [config](configs/coco_olac/panoptic-segmentation/pemola_R50_bs16_50ep.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_coco_olac.pth) |
+| Mask DINO † | ResNet-50 | 44.0 | 48.5 | 37.3 | 33.5 | 53.4 | [config](https://github.com/wenbo-wei/MaskDINO/blob/main/configs/coco_olac/panoptic-segmentation/maskdino_R50_bs16_50ep_3s_dowsample1_2048.yaml "Use MODEL.OAM.PE_MODULATION False for the baseline") | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_coco_olac.pth) |
+| **+ PEMOLA** | ResNet-50 | **44.8** | **49.4** | **37.8** | **34.2** | **55.3** | [config](https://github.com/wenbo-wei/MaskDINO/blob/main/configs/coco_olac/panoptic-segmentation/maskdino_R50_bs16_50ep_3s_dowsample1_2048.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/maskdino_pemola_coco_olac.pth) |
 
 ### Panoptic Segmentation on Cityscapes-OLAC
 
 | Method | Backbone | $\text{PQ}$ | $\text{PQ}^{\text{Th}}$ | $\text{PQ}^{\text{St}}$ | $\text{AP}_{\text{pan}}^{\text{Th}}$ | $\text{mIoU}_{\text{pan}}$ | Config | Weights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Mask2Former † | ResNet-50 | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [config](configs/checkpoints/mask2former_cityscapes_olac.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_cityscapes_olac.pth) |
-| **+ PEMOLA** | ResNet-50 | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](configs/checkpoints/mask2former_pemola_cityscapes_olac.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_cityscapes_olac.pth) |
+| Mask2Former † | ResNet-50 | 61.5 | 54.0 | 66.9 | 35.2 | 76.1 | [config](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml) | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_cityscapes_olac.pth) |
+| **+ PEMOLA** | ResNet-50 | **62.3** | **55.4** | **67.2** | **38.5** | **77.4** | [config](configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml "Use MODEL.PEMOLA.PE_MODULATION True for PEMOLA") | [download](https://huggingface.co/weiwb/PEMOLA/resolve/main/mask2former_pemola_cityscapes_olac.pth) |
 
 ### Occlusion Classifier
 
@@ -271,5 +271,5 @@ We thank the authors of these works for releasing their code.
 
 ## License
 
-This project is released under [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE).
+This project is released under <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" align="absmiddle"></a>.
 Code adapted from third-party projects retains its original licence and copyright notice.
