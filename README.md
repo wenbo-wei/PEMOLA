@@ -115,8 +115,6 @@ bash install_env.sh
 
 **Note:** Before running the installer, set `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
 
-Use the configuration shipped with each checkpoint. Mask DINO weights use the dedicated [Mask DINO implementation](https://github.com/wenbo-wei/MaskDINO). The segmentation commands below use this repository's Mask2Former implementation.
-
 ## Data Preparation
 
 PEMOLA is evaluated on **COCO-OLAC** ([Wei *et al.*, 2025](https://github.com/wenbo-wei/COCO-OLAC)) and **Cityscapes-OLAC** (introduced in this work).
