@@ -97,7 +97,7 @@ All experiments reported in this paper are conducted on 3× NVIDIA A100 (40 GB).
 </tbody>
 </table>
 
-From the PEMOLA repository root, you can download all model weights at once using the following commands:
+From the PEMOLA repository root, download all model weights at once using the following commands:
 
 ```bash
 python -m pip install huggingface_hub
