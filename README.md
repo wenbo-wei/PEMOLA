@@ -113,7 +113,7 @@ A single command sets up the `pemola` conda environment:
 bash install_env.sh
 ```
 
-**Note:** Set the installer's `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
+**Note:** Before running the installer, set `ARCH` to your GPU architecture (default: `8.9` for RTX 4090).
 
 Use the configuration shipped with each checkpoint. Mask DINO weights use the dedicated [Mask DINO implementation](https://github.com/wenbo-wei/MaskDINO). The segmentation commands below use this repository's Mask2Former implementation.
 
