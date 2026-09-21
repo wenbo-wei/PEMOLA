@@ -14,8 +14,8 @@ MODEL:
     NORM: "SyncBN"  # use syncbn for cityscapes dataset
     RES5_MULTI_GRID: [1, 1, 1]  # not used
 DATASETS:
-  TRAIN: ("cityscapes_fine_panoptic_train",)
-  TEST: ("cityscapes_fine_panoptic_val",)
+  TRAIN: ("cityscapes_olac_panoptic_train",)
+  TEST: ("cityscapes_olac_panoptic_val",)
 SOLVER:
   IMS_PER_BATCH: 16
   BASE_LR: 0.0001

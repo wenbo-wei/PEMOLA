@@ -126,10 +126,20 @@ datasets/data/
 │   ├── train/, val/                      # RGB images
 │   ├── annotations/                      # panoptic + instance JSONs
 │   └── occlusion_label_{train,val}.json  # per-image occlusion level
-├── cityscapes/                           # official Cityscapes (leftImg8bit/, gtFine/)
-├── cityscapes_olac/                      # built by tools/prepare_cityscapes_olac.py
-│   ├── leftImg8bit/{train,val}_{low,mid,high}/
-│   └── gtFine/                           # per-level gtFine, panoptic JSONs, occlusion labels
+├── cityscapes_olac/                      # complete splits + occlusion-level subsets
+│   ├── leftImg8bit/
+│   │   ├── train/, val/                  # complete RGB images (2975 / 500)
+│   │   └── {train,val}_{low,mid,high}/    # RGB images by occlusion level
+│   └── gtFine/
+│       ├── train/, val/                  # complete annotations, including labelTrainIds
+│       ├── {train,val}_{low,mid,high}/    # annotations by occlusion level
+│       ├── cityscapes_panoptic_{train,val}/
+│       ├── cityscapes_panoptic_{train,val}.json
+│       ├── cityscapes_panoptic_{train,val}_{low,mid,high}/
+│       ├── cityscapes_panoptic_{train,val}_{low,mid,high}.json
+│       └── occlusion_label_{train,val}.json
+├── cityscapes_cam/
+│   └── cam_pt_{train,val}/               # CAM tensors used by PEMOLA
 └── coco_olac_cls/
     ├── train/, val/, test/               # flat image directories
     ├── train_blackbg/, val_blackbg/, test_blackbg/
@@ -141,17 +151,25 @@ datasets/data/
 The occlusion-level annotations introduced in this work are shipped in this repository under
 [`datasets/cityscapes_olac/`](datasets/cityscapes_olac) — `occlusion_label_{train,val}.json`, one
 `low / mid / high` level per image (2975 train / 500 val), following the same labelling protocol as COCO-OLAC.
-Cityscapes itself may not be redistributed, so build the per-level subsets locally:
+Cityscapes itself may not be redistributed, so build the complete splits and per-level subsets locally.
+The official `cityscapes/` directory is only the preparation source. Training and evaluation use
+`cityscapes_olac/leftImg8bit/{train,val}` and the corresponding annotations in `cityscapes_olac/gtFine`.
 
 ```bash
 # 1. Download leftImg8bit + gtFine from https://www.cityscapes-dataset.com/
 #    into datasets/data/cityscapes/
-# 2. Generate the panoptic format:
+# 2. Generate semantic training IDs and panoptic annotations:
+CITYSCAPES_DATASET=datasets/data/cityscapes \
+    python -m cityscapesscripts.preparation.createTrainIdLabelImgs
 CITYSCAPES_DATASET=datasets/data/cityscapes \
     python -m cityscapesscripts.preparation.createPanopticImgs
-# 3. Slice into occlusion-level subsets (symlinks by default, --copy for real copies):
-python tools/prepare_cityscapes_olac.py
+# 3. Build self-contained complete splits and occlusion-level subsets:
+python tools/prepare_cityscapes_olac.py --copy
 ```
+
+Omit `--copy` to use symlinks instead; the official source must then remain available.
+The full splits are registered as `cityscapes_olac_panoptic_train` and `cityscapes_olac_panoptic_val`;
+append `_low`, `_mid`, or `_high` for evaluation by occlusion level.
 
 For the **occlusion classifier**, each image has one occlusion-level label.
 Training images are pre-processed by blackening non-object regions:
@@ -194,7 +212,8 @@ Use the configs under `configs/cityscapes/panoptic-segmentation/` with the same 
 export DETECTRON2_DATASETS=datasets/data
 python train_net.py \
     --config-file configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml \
-    --num-gpus 3
+    --num-gpus 3 \
+    MODEL.PEMOLA.PE_MODULATION True
 ```
 
 ## Evaluation

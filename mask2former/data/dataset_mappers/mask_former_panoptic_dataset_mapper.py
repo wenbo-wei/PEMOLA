@@ -68,7 +68,7 @@ class MaskFormerPanopticDatasetMapper(MaskFormerSemanticDatasetMapper):
 
             if self.cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_panoptic":
                 self.cam_dir = os.path.join(self.dataset_root, "cityscapes_cam/cam_pt_train")
-                occlusion_label_json = os.path.join(self.dataset_root, "cityscapes/gtFine/occlusion_label_train.json")
+                occlusion_label_json = os.path.join(self.dataset_root, "cityscapes_olac/gtFine/occlusion_label_train.json")
             else:
                 ValueError(f"Unsupported cfg.INPUT.DATASET_MAPPER_NAME: {self.cfg.INPUT.DATASET_MAPPER_NAME}.")
 

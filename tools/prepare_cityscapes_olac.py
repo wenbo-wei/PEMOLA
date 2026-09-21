@@ -7,13 +7,15 @@
 
 Cityscapes itself may not be redistributed, so this repo ships only the new
 occlusion-level annotations (datasets/cityscapes_olac/occlusion_label_*.json).
-This script slices a locally downloaded Cityscapes into per-occlusion-level
+This script includes the complete train/val splits and per-occlusion-level
 subsets (low / mid / high) matching those labels.
 
 Prerequisites:
     1. Download leftImg8bit and gtFine from https://www.cityscapes-dataset.com/
        into CITYSCAPES_ROOT.
-    2. Generate the panoptic annotations with cityscapesscripts:
+    2. Generate semantic training IDs and panoptic annotations:
+           CITYSCAPES_DATASET=$CITYSCAPES_ROOT python -m \
+               cityscapesscripts.preparation.createTrainIdLabelImgs
            CITYSCAPES_DATASET=$CITYSCAPES_ROOT python -m \
                cityscapesscripts.preparation.createPanopticImgs
        (this creates gtFine/cityscapes_panoptic_{train,val}{,.json})
@@ -28,9 +30,11 @@ By default files are symlinked; pass --copy to materialise real copies.
 """
 
 import argparse
+import filecmp
 import json
 import os
 import shutil
+import tempfile
 
 
 LEVELS = ["low", "mid", "high"]
@@ -38,7 +42,7 @@ LEVELS = ["low", "mid", "high"]
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Slice official Cityscapes into Cityscapes-OLAC occlusion-level subsets.",
+        description="Build complete and per-level Cityscapes-OLAC splits from official Cityscapes.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--cityscapes_root", default="datasets/data/cityscapes",
@@ -46,7 +50,7 @@ def parse_args():
     parser.add_argument("--labels_dir", default="datasets/cityscapes_olac",
                         help="folder holding occlusion_label_{train,val}.json (shipped in this repo)")
     parser.add_argument("--output", default="datasets/data/cityscapes_olac",
-                        help="output root for the sliced dataset")
+                        help="output root for the complete and per-level dataset")
     parser.add_argument("--splits", nargs="+", default=["train", "val"], choices=["train", "val"])
     parser.add_argument("--copy", action="store_true",
                         help="copy files instead of symlinking")
@@ -54,13 +58,51 @@ def parse_args():
 
 
 def place(src, dst, copy):
+    if not os.path.isfile(src):
+        raise FileNotFoundError(src)
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     if os.path.lexists(dst):
-        os.remove(dst)
+        if not os.path.isfile(dst) or (
+            not os.path.samefile(src, dst) and not filecmp.cmp(src, dst, shallow=False)
+        ):
+            raise FileExistsError(f"Refusing to replace different existing data: {dst}")
+        if not (copy and os.path.islink(dst)):
+            return
     if copy:
-        shutil.copy2(src, dst)
+        # Also materialise a matching symlink left by a previous default run.
+        # Never remove its target or leave a half-written destination file.
+        with tempfile.NamedTemporaryFile(dir=os.path.dirname(dst), delete=False) as f:
+            temporary = f.name
+        try:
+            shutil.copy2(src, temporary)
+            os.replace(temporary, dst)
+        finally:
+            if os.path.exists(temporary):
+                os.remove(temporary)
     else:
         os.symlink(os.path.abspath(src), dst)
+
+
+def place_tree(src, dst, copy):
+    if not os.path.isdir(src):
+        raise FileNotFoundError(src)
+    for directory, _, filenames in os.walk(src):
+        relative = os.path.relpath(directory, src)
+        for filename in sorted(filenames):
+            place(os.path.join(directory, filename), os.path.join(dst, relative, filename), copy)
+
+
+def write_json(data, path, copy):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    if os.path.lexists(path):
+        with open(path) as f:
+            if json.load(f) == data:
+                if copy and os.path.islink(path):
+                    place(os.path.realpath(path), path, copy=True)
+                return
+        raise FileExistsError(f"Refusing to replace different existing data: {path}")
+    with open(path, "x") as f:
+        json.dump(data, f)
 
 
 def slice_split(split, root, labels_dir, out, copy):
@@ -77,9 +119,34 @@ def slice_split(split, root, labels_dir, out, copy):
     pan_images = {im["id"]: im for im in pan["images"]}
     pan_annos = {an["image_id"]: an for an in pan["annotations"]}
 
-    missing = sorted(set(labels) - set(pan_images))
-    if missing:
-        raise KeyError(f"{len(missing)} labelled images absent from {pan_json_path}, e.g. {missing[:3]}")
+    if set(labels) != set(pan_images) or set(pan_images) != set(pan_annos):
+        raise ValueError(f"Image, panoptic annotation and occlusion label IDs must match for {split}")
+    if set(labels.values()) - set(LEVELS):
+        raise ValueError(f"Unknown occlusion levels in {label_path}")
+
+    # Validate required training inputs before creating this split.
+    for stem in pan_images:
+        city = stem.split("_")[0]
+        required = (
+            os.path.join(root, "leftImg8bit", split, city, f"{stem}_leftImg8bit.png"),
+            os.path.join(root, "gtFine", split, city, f"{stem}_gtFine_labelTrainIds.png"),
+            os.path.join(root, "gtFine", f"cityscapes_panoptic_{split}", pan_annos[stem]["file_name"]),
+        )
+        for path in required:
+            if not os.path.isfile(path):
+                raise FileNotFoundError(f"{path} not found (see preparation steps in module docstring)")
+
+    # Include complete splits alongside the occlusion-level subsets so all
+    # training and evaluation inputs can be read from cityscapes_olac alone.
+    for relative in (
+        os.path.join("leftImg8bit", split),
+        os.path.join("gtFine", split),
+        os.path.join("gtFine", f"cityscapes_panoptic_{split}"),
+    ):
+        place_tree(os.path.join(root, relative), os.path.join(out, relative), copy)
+    place(pan_json_path, os.path.join(out, "gtFine", os.path.basename(pan_json_path)), copy)
+    place(label_path, os.path.join(out, "gtFine", os.path.basename(label_path)), copy)
+    print(f"{split}: {len(pan_images)} images (complete)")
 
     for level in LEVELS:
         stems = sorted(k for k, v in labels.items() if v == level)
@@ -107,18 +174,26 @@ def slice_split(split, root, labels_dir, out, copy):
             "categories": pan["categories"],
         }
         out_json = os.path.join(out, "gtFine", f"cityscapes_panoptic_{sub}.json")
-        os.makedirs(os.path.dirname(out_json), exist_ok=True)
-        with open(out_json, "w") as f:
-            json.dump(sliced, f)
+        write_json(sliced, out_json, copy)
         print(f"{sub}: {len(stems)} images")
-
-    shutil.copy2(label_path, os.path.join(out, "gtFine", os.path.basename(label_path)))
 
 
 def main():
     args = parse_args()
+    source = os.path.realpath(args.cityscapes_root)
+    output = os.path.realpath(args.output)
+    if os.path.commonpath([source, output]) in (source, output):
+        raise ValueError("Source and output must be separate, non-nested directories")
+    # Reject linked directories in an existing destination, which could send
+    # writes outside the output or modify the source dataset through a link.
+    if os.path.isdir(output):
+        for directory, subdirectories, _ in os.walk(output):
+            for name in subdirectories:
+                path = os.path.join(directory, name)
+                if os.path.islink(path):
+                    raise ValueError(f"Output contains a linked directory: {path}")
     for split in args.splits:
-        slice_split(split, args.cityscapes_root, args.labels_dir, args.output, args.copy)
+        slice_split(split, source, args.labels_dir, output, args.copy)
     print(f"Done. Cityscapes-OLAC written to {args.output}")
 
 

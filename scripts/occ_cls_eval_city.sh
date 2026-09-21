@@ -8,7 +8,7 @@ occ_cls_train.py \
 --opts \
 MODEL.NUM_CLASSES 3 \
 --dataset cityscapes \
---data_path datasets/data/cityscapes \
+--data_path datasets/data/cityscapes_olac \
 --resume output/swin_large_patch4_window12_384_22kto1k_finetune/test/ckpt_epoch_1.pth \
 --batch_size 64 \
 --output output \
