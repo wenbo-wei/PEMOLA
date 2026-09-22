@@ -157,10 +157,7 @@ data/datasets/
 
 ### Background-blackened images
 
-The **occlusion classifier** uses the separate `coco_olac_cls` splits, with one occlusion-level label per image.
-Its training loader reads `coco_olac_cls/train_blackbg/`; keep the original images in `coco_olac_cls/train/`.
-CAM preparation pairs each segmentation image with its background-blackened counterpart.
-For example, generate the COCO-OLAC training counterparts under `coco_olac/train_blackbg/`:
+The **occlusion classifier** uses the separate `coco_olac_cls` splits. Use the following command to blacken image backgrounds:
 
 ```bash
 python tools/blacken_bg.py \
@@ -174,8 +171,6 @@ Use the corresponding validation paths for `coco_olac/val_blackbg/`.
 Prepare the classifier's `*_blackbg` folders using its own train / val / test image assignments and label JSONs.
 
 Set `DETECTRON2_DATASETS=datasets/data` so that Detectron2 resolves dataset paths correctly.
-The segmentation training, evaluation, and prediction scripts under `scripts/` already export it;
-classifier scripts use their explicit `--data_path`.
 
 ## Training
 
