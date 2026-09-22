@@ -26,8 +26,6 @@
 - [Installation](#installation)
 - [Data Preparation](#data-preparation)
 - [Training](#training)
-- [Evaluation](#evaluation)
-- [Inference &amp; Visualization](#inference--visualization)
 - [Citation](#citation)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
@@ -193,48 +191,6 @@ python train_net.py \
     --num-gpus 3 \
     MODEL.PEMOLA.PE_MODULATION True
 ```
-
-## Evaluation
-
-```bash
-bash scripts/eval_pemola_olac_r50.sh       # ResNet-50
-bash scripts/eval_pemola_olac_swin.sh      # Swin-L
-bash scripts/eval_base_city_r50.sh         # Cityscapes-OLAC baseline
-```
-
-The wrapper scripts use their configured `output/` checkpoint paths. To evaluate the downloaded COCO-OLAC checkpoint after preparing the dataset, CAMs, and occlusion labels, invoke the entry point directly:
-
-```bash
-export DETECTRON2_DATASETS=datasets/data
-python train_net.py \
-    --config-file checkpoints/mask2former_pemola_coco_olac/config.yaml \
-    --num-gpus 1 \
-    --eval-only \
-    MODEL.WEIGHTS checkpoints/mask2former_pemola_coco_olac/mask2former_pemola_coco_olac.pth
-```
-
-## Inference &amp; Visualization
-
-**Required inputs:** PEMOLA segmentation uses an image, a per-image CAM tensor, and a `low` / `mid` / `high` occlusion label. The auxiliary classifier supports label prediction and CAM preparation; the current CAM workflow also requires background-blackened images. The [classifier model card](https://huggingface.co/weiwb/PEMOLA/blob/main/swin_l_384_occlusion_coco_olac/README.md) provides the preparation commands.
-
-**Per-image Mask2Former panoptic prediction** (writes a colourised PNG):
-
-```bash
-python predict.py \
-    --config checkpoints/mask2former_pemola_coco_olac/config.yaml \
-    --weights checkpoints/mask2former_pemola_coco_olac/mask2former_pemola_coco_olac.pth \
-    --input /path/to/image.jpg \
-    --output-dir output/pemola-predictions \
-    --cam-dir /path/to/cam_pt \
-    --occlusion-json /path/to/occlusion_labels.json \
-    --format png
-```
-
-For `image.jpg`, supply `cam_pt/image.pt` and a JSON entry such as `{"image": "mid"}`. `--input` accepts a single image or a directory. For Cityscapes, use the downloaded `mask2former_pemola_cityscapes_olac` configuration and weights; the [model card](https://huggingface.co/weiwb/PEMOLA/blob/main/mask2former_pemola_cityscapes_olac/README.md) explains how to align the `_leftImg8bit` filename suffix with CAM and label keys.
-
-For the Mask2Former baselines, use the downloaded `mask2former_coco_olac` or `mask2former_cityscapes_olac` configuration and weights, add `--no-pemola`, and omit `--cam-dir` and `--occlusion-json`.
-
-**Occlusion labels and Grad-CAM inputs:** The [released Swin-L 384 model card](https://huggingface.co/weiwb/PEMOLA/blob/main/swin_l_384_occlusion_coco_olac/README.md) provides commands that load `checkpoints/swin_l_384_occlusion_coco_olac/swin_l_384_occlusion_coco_olac.pth` for label prediction and CAM generation. Use an empty label JSON for pure predictions, since the prediction script preserves any supplied labels. CAM generation requires matching original and background-blackened image directories.
 
 ## Citation
 
