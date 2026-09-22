@@ -61,7 +61,7 @@ class PanopticTestMapper:
 
             if self.cfg.INPUT.DATASET_MAPPER_NAME == "coco_olac_panoptic_lsj":
                 self.cam_dir = os.path.join(self.dataset_root, "coco_olac_cam/cam_pt_val")
-                occlusion_label_json = os.path.join(self.dataset_root, "coco_olac/val/occlusion_label_val.json")
+                occlusion_label_json = os.path.join(self.dataset_root, "coco_olac/occlusion_label_val.json")
             elif self.cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_panoptic":
                 self.cam_dir = os.path.join(self.dataset_root, "cityscapes_cam/cam_pt_val")
                 occlusion_label_json = os.path.join(self.dataset_root, "cityscapes_olac/gtFine/occlusion_label_val.json")

@@ -7,13 +7,12 @@ from detectron2.data.datasets.builtin_meta import COCO_CATEGORIES
 from detectron2.utils.file_io import PathManager
 
 
-# Splits whose layout matches the regular coco_olac pattern (paths derivable
-# from the split name).
+# Splits share a flat COCO-style root, with JSONs in annotations/.
 _COCO_OLAC_SPLITS = ["train", "val", "val_low", "val_mid", "val_high"]
 
 
 def _coco_olac_paths(split):
-    base = f"coco_olac/{split}"
+    base = "coco_olac"
     return (
         f"{base}/{split}",
         f"{base}/panoptic_{split}",

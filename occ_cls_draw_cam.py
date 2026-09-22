@@ -39,13 +39,13 @@ def parse_args():
                         default=8,
                         help="batch size for single GPU")
     parser.add_argument("--data_path",
-                        default="datasets/data/coco_olac/val/val",
+                        default="datasets/data/coco_olac/val",
                         help="Input image dir")
     parser.add_argument('--dataset', type=str,
                         default='coco',
                         help='dataset name')
     parser.add_argument("--occlusion_ann",
-                        default="datasets/data/coco_olac/val/occlusion_label_val.json",
+                        default="datasets/data/coco_olac/occlusion_label_val.json",
                         help="Path to occlusion annotation json file")
     parser.add_argument("--resume",
                         default="output/swin_large_patch4_window12_384_22kto1k_finetune/ckpt_epoch_24.pth",

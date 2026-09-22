@@ -101,7 +101,7 @@ class COCOPanopticNewBaselineDatasetMapper:
 
             if self.cfg.INPUT.DATASET_MAPPER_NAME == "coco_olac_panoptic_lsj":
                 self.cam_dir = os.path.join(self.dataset_root, "coco_olac_cam/cam_pt_train")
-                occlusion_label_json = os.path.join(self.dataset_root, "coco_olac/train/occlusion_label_train.json")
+                occlusion_label_json = os.path.join(self.dataset_root, "coco_olac/occlusion_label_train.json")
             else:
                 ValueError(f"Unsupported cfg.INPUT.DATASET_MAPPER_NAME: {self.cfg.INPUT.DATASET_MAPPER_NAME}.")
 

@@ -9,8 +9,8 @@ occ_cls_draw_cam.py \
 --opts \
 MODEL.NUM_CLASSES 3 \
 --dataset coco \
---data_path datasets/data/coco_olac/train/train \
---occlusion_ann datasets/data/coco_olac/train/occlusion_label_train.json \
+--data_path datasets/data/coco_olac/train \
+--occlusion_ann datasets/data/coco_olac/occlusion_label_train.json \
 --resume output/swin_large_patch4_window12_384_22kto1k_finetune/ep29.pth \
 --batch_size 8 \
 --output output \

@@ -118,52 +118,56 @@ bash install_env.sh
 ## Data Preparation
 
 PEMOLA is evaluated on **COCO-OLAC** ([Wei *et al.*, 2025](https://github.com/wenbo-wei/COCO-OLAC)) and **Cityscapes-OLAC** (introduced in this work).
-The datasets should be placed under `datasets/data/` following the structure below:
+The datasets should be placed under `~/data/datasets/` following the structure below:
 
 ```
-datasets/data/
-├── coco_olac/
-│   ├── train/
-│   │   ├── train/                       # RGB images
-│   │   ├── train_blackbg/               # background-blackened images for CAM
-│   │   ├── panoptic_train/, panoptic_semseg_train/
-│   │   ├── annotations/{instances,panoptic}_train.json
-│   │   └── occlusion_label_train.json
-│   ├── val/
-│   │   ├── val/
-│   │   ├── val_blackbg/
-│   │   ├── panoptic_val/, panoptic_semseg_val/
-│   │   ├── annotations/{instances,panoptic}_val.json
-│   │   └── occlusion_label_val.json
-│   └── val_{low,mid,high}/              # per-level RGB images, masks, annotations and labels
-├── coco_olac_cam/
-│   └── cam_pt_{train,val}/              # CAM tensors used by PEMOLA
-├── cityscapes_olac/                      # complete splits + occlusion-level subsets
-│   ├── leftImg8bit/
-│   │   ├── train/, val/                  # city subdirectories; 2975 / 500 RGB images
-│   │   ├── {train,val}_{low,mid,high}/    # RGB images by occlusion level
-│   │   └── {train,val}_blackbg/          # generated separately for classifier / CAM
-│   └── gtFine/
-│       ├── train/, val/                  # complete annotations, including labelTrainIds
-│       ├── {train,val}_{low,mid,high}/    # annotations by occlusion level
-│       ├── cityscapes_panoptic_{train,val}/
-│       ├── cityscapes_panoptic_{train,val}.json
-│       ├── cityscapes_panoptic_{train,val}_{low,mid,high}/
-│       ├── cityscapes_panoptic_{train,val}_{low,mid,high}.json
-│       └── occlusion_label_{train,val}.json
-├── cityscapes_cam/
-│   └── cam_pt_{train,val}/               # CAM tensors used by PEMOLA
-└── coco_olac_cls/
-    ├── train/, val/, test/               # flat image directories
-    ├── train_blackbg/, val_blackbg/, test_blackbg/
-    └── occlusion_label_{train,val,test}.json
+data/datasets/
+  coco/                                  # original COCO data
+  cityscapes/                            # source for Cityscapes-OLAC preparation
+  coco_olac/
+    annotations/
+      instances_{train,val,val_low,val_mid,val_high}.json
+      panoptic_{train,val,val_low,val_mid,val_high}.json
+    {train,val,val_low,val_mid,val_high}/  # RGB images
+    {train,val}_blackbg/                  # background-blackened images
+    panoptic_{train,val,val_low,val_mid,val_high}/
+    panoptic_semseg_{train,val,val_low,val_mid,val_high}/
+    panoptic_stuff_{train,val,val_low,val_mid,val_high}/
+    occlusion_label_{train,val,val_low,val_mid,val_high}.json
+  coco_olac_cam/
+    cam_pt_{train,val}/                   # CAM tensors
+    cam_image_{train,val}/                # CAM visualizations
+  cityscapes_olac/
+    leftImg8bit/
+      {train,val}/                       # RGB images by city
+      {train,val}_{low,mid,high}/
+      {train,val}_blackbg/
+    gtFine/
+      {train,val}/                       # annotations by city
+      {train,val}_{low,mid,high}/
+      cityscapes_panoptic_{train,val}/
+      cityscapes_panoptic_{train,val}.json
+      cityscapes_panoptic_{train,val}_{low,mid,high}/
+      cityscapes_panoptic_{train,val}_{low,mid,high}.json
+      occlusion_label_{train,val}.json
+  cityscapes_cam/
+    cam_pt_{train,val}/                   # CAM tensors
+    cam_image_{train,val}/                # CAM visualizations
+    cam_image_{train,val}_nosmooth/       # CAM visualizations without smoothing
+  coco_olac_cls/
+    {train,val,test}/                     # classifier images
+    {train,val,test}_blackbg/
+    occlusion_label_{train,val,test}.json
 ```
 
-The tree lists the inputs used by training, evaluation, and CAM preparation. Braces denote separate names;
-for example, `cam_pt_{train,val}` means `cam_pt_train/` and `cam_pt_val/`.
-`datasets/data/` is local storage (a directory or symlink) and is excluded from Git.
-The repository-provided Cityscapes-OLAC label JSONs are stored separately in
-[`datasets/cityscapes_olac/`](datasets/cityscapes_olac).
+The tree shows the PEMOLA-related data under `~/data/datasets/`.
+From the repository root, create the `datasets/data` symlink once (excluded from Git):
+
+```bash
+ln -s ~/data/datasets datasets/data
+```
+
+The commands below use this symlink.
 
 ### Cityscapes-OLAC
 
@@ -195,17 +199,17 @@ append `_low`, `_mid`, or `_high` for evaluation by occlusion level.
 The **occlusion classifier** uses the separate `coco_olac_cls` splits, with one occlusion-level label per image.
 Its training loader reads `coco_olac_cls/train_blackbg/`; keep the original images in `coco_olac_cls/train/`.
 CAM preparation pairs each segmentation image with its background-blackened counterpart.
-For example, generate the COCO-OLAC training counterparts under `coco_olac/train/train_blackbg/`:
+For example, generate the COCO-OLAC training counterparts under `coco_olac/train_blackbg/`:
 
 ```bash
 python tools/blacken_bg.py \
     --dataset    coco \
-    --data_path  datasets/data/coco_olac/train/train \
-    --ann_path   datasets/data/coco_olac/train/annotations/instances_train.json \
-    --output     datasets/data/coco_olac/train/train_blackbg
+    --data_path  datasets/data/coco_olac/train \
+    --ann_path   datasets/data/coco_olac/annotations/instances_train.json \
+    --output     datasets/data/coco_olac/train_blackbg
 ```
 
-Use the corresponding validation paths for `coco_olac/val/val_blackbg/`.
+Use the corresponding validation paths for `coco_olac/val_blackbg/`.
 Prepare the classifier's `*_blackbg` folders using its own train / val / test image assignments and label JSONs.
 
 Set `DETECTRON2_DATASETS=datasets/data` so that Detectron2 resolves dataset paths correctly.

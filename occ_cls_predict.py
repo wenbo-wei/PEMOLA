@@ -35,13 +35,13 @@ def parse_args():
                         default=32,
                         help="batch size for single GPU")
     parser.add_argument('--data_path', type=str,
-                        default='datasets/data/coco_olac/val/val',
+                        default='datasets/data/coco_olac/val',
                         help='path to dataset')
     parser.add_argument('--dataset', type=str,
                         default='coco',
                         help='dataset name')
     parser.add_argument("--occlusion_ann",
-                        default="datasets/data/coco_olac/train/occlusion_label_train.json",
+                        default="datasets/data/coco_olac/occlusion_label_train.json",
                         help="Path to occlusion annotation json file")
     parser.add_argument('--resume', type=str, required=True,
                         help='resume from checkpoint')
