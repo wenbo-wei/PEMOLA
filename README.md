@@ -118,6 +118,9 @@ bash install_env.sh
 ## Data Preparation
 
 PEMOLA is evaluated on **COCO-OLAC** ([Wei *et al.*, 2025](https://github.com/wenbo-wei/COCO-OLAC)) and **Cityscapes-OLAC** (introduced in this work).
+
+Set `DETECTRON2_DATASETS=datasets/data` so that Detectron2 resolves dataset paths correctly.
+
 The datasets should be placed under `~/data/datasets/` following the structure below:
 
 ```
@@ -168,8 +171,6 @@ python tools/blacken_bg.py \
 
 Use the corresponding validation paths for `coco_olac/val_blackbg/`.
 Prepare the classifier's `*_blackbg` folders using its own train / val / test image assignments and label JSONs.
-
-Set `DETECTRON2_DATASETS=datasets/data` so that Detectron2 resolves dataset paths correctly.
 
 ## Training
 
