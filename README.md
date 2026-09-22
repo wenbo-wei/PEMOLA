@@ -122,8 +122,6 @@ The datasets should be placed under `~/data/datasets/` following the structure b
 
 ```
 data/datasets/
-  coco/                                  # original COCO data
-  cityscapes/                            # source for Cityscapes-OLAC preparation
   coco_olac/
     annotations/
       instances_{train,val,val_low,val_mid,val_high}.json
