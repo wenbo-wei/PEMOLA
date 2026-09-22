@@ -169,9 +169,6 @@ python tools/blacken_bg.py \
     --output     datasets/data/coco_olac/train_blackbg
 ```
 
-Use the corresponding validation paths for `coco_olac/val_blackbg/`.
-Prepare the classifier's `*_blackbg` folders using its own train / val / test image assignments and label JSONs.
-
 ## Training
 
 ### 1. Occlusion classifier
