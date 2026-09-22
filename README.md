@@ -117,11 +117,7 @@ bash install_env.sh
 
 ## Data Preparation
 
-PEMOLA is evaluated on **COCO-OLAC** ([Wei *et al.*, 2025](https://github.com/wenbo-wei/COCO-OLAC)) and **Cityscapes-OLAC** (introduced in this work).
-
-Set `DETECTRON2_DATASETS=datasets/data` so that Detectron2 resolves dataset paths correctly.
-
-The datasets should be placed under `~/data/datasets/` following the structure below:
+PEMOLA is evaluated on **COCO-OLAC** ([Wei *et al.*, 2025](https://github.com/wenbo-wei/COCO-OLAC)) and **Cityscapes-OLAC** (introduced in this work). Follow [Mask2Former's dataset preparation instructions](https://github.com/facebookresearch/Mask2Former/blob/main/datasets/README.md) to generate the required semantic and panoptic annotations in advance. Set `DETECTRON2_DATASETS=datasets/data` so that Detectron2 resolves dataset paths correctly. The datasets should be placed under `~/data/datasets/` following the structure below:
 
 ```
 data/datasets/
