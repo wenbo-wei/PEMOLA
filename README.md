@@ -182,14 +182,8 @@ bash scripts/train_pemola_olac_r50.sh      # ResNet-50
 
 ### 3. PEMOLA panoptic segmentation on Cityscapes-OLAC
 
-Use the configs under `configs/cityscapes/panoptic-segmentation/` with the same `train_net.py` interface, for example:
-
 ```bash
-export DETECTRON2_DATASETS=datasets/data
-python train_net.py \
-    --config-file configs/cityscapes/panoptic-segmentation/maskformer2_R50_bs16_90k.yaml \
-    --num-gpus 3 \
-    MODEL.PEMOLA.PE_MODULATION True
+bash scripts/train_pemola_city_r50.sh      # ResNet-50
 ```
 
 ## Citation
