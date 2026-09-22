@@ -186,7 +186,7 @@ bash scripts/occ_cls_train_res.sh     # ResNet baselines (50 / 101)
 bash scripts/train_pemola_olac_r50.sh      # ResNet-50
 ```
 
-> Scripts in `scripts/` ship with `--num-gpus 2` for typical local development. The paper numbers are reproduced with `--num-gpus 3` on **3× A100 (40 GB)**. Adjust the flag (and `SOLVER.IMS_PER_BATCH` in the YAML) to match your hardware.
+> The paper numbers are reproduced with `--num-gpus 3` on **3× A100 (40 GB)**. Adjust the flag (and `SOLVER.IMS_PER_BATCH` in the YAML) to match your hardware.
 
 ### 3. PEMOLA panoptic segmentation on Cityscapes-OLAC
 
