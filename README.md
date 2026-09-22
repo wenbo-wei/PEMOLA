@@ -136,11 +136,11 @@ data/datasets/
     cam_pt_{train,val}/                   # CAM tensors
   cityscapes_olac/
     leftImg8bit/
-      {train,val}/                       # RGB images by city
+      {train,val}/                       # RGB images
       {train,val}_{low,mid,high}/
       {train,val}_blackbg/
     gtFine/
-      {train,val}/                       # annotations by city
+      {train,val}/                       # annotations
       {train,val}_{low,mid,high}/
       cityscapes_panoptic_{train,val}/
       cityscapes_panoptic_{train,val}.json
