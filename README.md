@@ -149,7 +149,6 @@ data/datasets/
       occlusion_label_{train,val}.json
   cityscapes_cam/
     cam_pt_{train,val}/                   # CAM tensors
-    cam_image_{train,val}_nosmooth/       # CAM visualizations without smoothing
   coco_olac_cls/
     {train,val,test}/                     # classifier images
     {train,val,test}_blackbg/
