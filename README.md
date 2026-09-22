@@ -134,7 +134,6 @@ data/datasets/
     occlusion_label_{train,val,val_low,val_mid,val_high}.json
   coco_olac_cam/
     cam_pt_{train,val}/                   # CAM tensors
-    cam_image_{train,val}/                # CAM visualizations
   cityscapes_olac/
     leftImg8bit/
       {train,val}/                       # RGB images by city
@@ -150,7 +149,6 @@ data/datasets/
       occlusion_label_{train,val}.json
   cityscapes_cam/
     cam_pt_{train,val}/                   # CAM tensors
-    cam_image_{train,val}/                # CAM visualizations
     cam_image_{train,val}_nosmooth/       # CAM visualizations without smoothing
   coco_olac_cls/
     {train,val,test}/                     # classifier images
