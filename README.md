@@ -161,7 +161,6 @@ The **occlusion classifier** uses the separate `coco_olac_cls` splits. Use the f
 
 ```bash
 python tools/blacken_bg.py \
-    --dataset    coco \
     --data_path  datasets/data/coco_olac/train \
     --ann_path   datasets/data/coco_olac/annotations/instances_train.json \
     --output     datasets/data/coco_olac/train_blackbg
@@ -185,7 +184,6 @@ bash scripts/occ_cls_train_res.sh     # ResNet baselines (50 / 101)
 
 ```bash
 bash scripts/train_pemola_olac_r50.sh      # ResNet-50
-bash scripts/train_pemola_olac_swin.sh     # Swin-L  (IN-22K, 384)
 ```
 
 > Scripts in `scripts/` ship with `--num-gpus 2` for typical local development. The paper numbers are reproduced with `--num-gpus 3` on **3× A100 (40 GB)**. Adjust the flag (and `SOLVER.IMS_PER_BATCH` in the YAML) to match your hardware.

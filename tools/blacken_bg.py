@@ -19,14 +19,14 @@ JPEG_QUALITY = 95
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Generate images with black background for coco/cityscapes datasets.")
+    parser = argparse.ArgumentParser(description="Generate images with black background for COCO-OLAC by default.")
     parser.add_argument("--dataset", type=str, choices=["coco", "cityscapes"], default="coco",
-                        help="dataset type: coco or cityscapes")
-    parser.add_argument("--data_path", type=str, default="datasets/data/coco/train2017",
+                        help="annotation format: coco (used by COCO-OLAC) or cityscapes")
+    parser.add_argument("--data_path", type=str, default="datasets/data/coco_olac/train",
                         help="path to dataset root (images)")
-    parser.add_argument("--ann_path", type=str, default="datasets/data/coco/annotations/instances_train2017.json",
+    parser.add_argument("--ann_path", type=str, default="datasets/data/coco_olac/annotations/instances_train.json",
                         help="path to annotation (json for coco, gtFine for cityscapes)")
-    parser.add_argument("--output", type=str, default="output/black_bg",
+    parser.add_argument("--output", type=str, default="datasets/data/coco_olac/train_blackbg",
                         help="path to output folder")
     parser.add_argument("--workers", type=int, default=os.cpu_count() or 1,
                         help="number of parallel worker processes")
