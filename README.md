@@ -155,40 +155,6 @@ data/datasets/
     occlusion_label_{train,val,test}.json
 ```
 
-The tree shows the PEMOLA-related data under `~/data/datasets/`.
-From the repository root, create the `datasets/data` symlink once (excluded from Git):
-
-```bash
-ln -s ~/data/datasets datasets/data
-```
-
-The commands below use this symlink.
-
-### Cityscapes-OLAC
-
-The occlusion-level annotations introduced in this work are shipped in this repository under
-[`datasets/cityscapes_olac/`](datasets/cityscapes_olac) — `occlusion_label_{train,val}.json`, one
-`low / mid / high` level per image (2975 train / 500 val), following the same labelling protocol as COCO-OLAC.
-Cityscapes itself may not be redistributed, so build the complete splits and per-level subsets locally.
-The official `cityscapes/` directory is only the preparation source. Training and evaluation use
-`cityscapes_olac/leftImg8bit/{train,val}` and the corresponding annotations in `cityscapes_olac/gtFine`.
-
-```bash
-# 1. Download leftImg8bit + gtFine from https://www.cityscapes-dataset.com/
-#    into datasets/data/cityscapes/
-# 2. Generate semantic training IDs and panoptic annotations:
-CITYSCAPES_DATASET=datasets/data/cityscapes \
-    python -m cityscapesscripts.preparation.createTrainIdLabelImgs
-CITYSCAPES_DATASET=datasets/data/cityscapes \
-    python -m cityscapesscripts.preparation.createPanopticImgs
-# 3. Build self-contained complete splits and occlusion-level subsets:
-python tools/prepare_cityscapes_olac.py --copy
-```
-
-Omit `--copy` to use symlinks instead; the official source must then remain available.
-The full splits are registered as `cityscapes_olac_panoptic_train` and `cityscapes_olac_panoptic_val`;
-append `_low`, `_mid`, or `_high` for evaluation by occlusion level.
-
 ### Background-blackened images
 
 The **occlusion classifier** uses the separate `coco_olac_cls` splits, with one occlusion-level label per image.
