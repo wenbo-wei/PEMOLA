@@ -174,8 +174,6 @@ Set `DETECTRON2_DATASETS=datasets/data` so that Detectron2 resolves dataset path
 
 ## Training
 
-The training scripts under `scripts/` wrap `train_net.py` (Mask2Former) or `occ_cls_train.py` (classifier) and read the corresponding YAML in `configs/`.
-
 ### 1. Occlusion classifier
 
 ```bash
