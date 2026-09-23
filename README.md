@@ -32,6 +32,7 @@
 
 ## News
 
+- [2026-09] Cityscapes-OLAC occlusion annotations are released on [GitHub Releases](https://github.com/wenbo-wei/PEMOLA/releases/tag/cityscapes-olac-annotations-v1.0).
 - [2026-09] Model weights are released on [Hugging Face](https://huggingface.co/weiwb/PEMOLA).
 - [2026-03] Paper accepted to **ICME 2026**.
 
@@ -151,6 +152,34 @@ datasets/data/
     {train,val,test}_blackbg/
     occlusion_label_{train,val,test}.json
 ```
+
+### Cityscapes-OLAC annotations
+
+Download the occlusion-level annotations from [GitHub Releases](https://github.com/wenbo-wei/PEMOLA/releases/tag/cityscapes-olac-annotations-v1.0):
+
+| File | Images | Size | Download |
+|:-----|:------:|:----:|:--------:|
+| `occlusion_label_train.json` | 2,975 | 96.9 KiB | [Download](https://github.com/wenbo-wei/PEMOLA/releases/download/cityscapes-olac-annotations-v1.0/occlusion_label_train.json) |
+| `occlusion_label_val.json` | 500 | 16.5 KiB | [Download](https://github.com/wenbo-wei/PEMOLA/releases/download/cityscapes-olac-annotations-v1.0/occlusion_label_val.json) |
+
+Each JSON maps a Cityscapes image ID (e.g., `weimar_000095_000019`, without the `_leftImg8bit.png` suffix) to `low`, `mid`, or `high`, following the same annotation protocol as [COCO-OLAC](https://github.com/wenbo-wei/COCO-OLAC#annotation-format).
+
+Save both JSON files in `datasets/cityscapes_olac/` (the same annotations are also included in this repository). Download the original images and `gtFine` annotations from [Cityscapes](https://www.cityscapes-dataset.com/downloads/) into `datasets/data/cityscapes/`. From the PEMOLA repository root, generate the semantic training IDs and panoptic annotations, then build Cityscapes-OLAC:
+
+```bash
+export CITYSCAPES_DATASET="$PWD/datasets/data/cityscapes"
+python -m cityscapesscripts.preparation.createTrainIdLabelImgs
+python -m cityscapesscripts.preparation.createPanopticImgs --set-names train val
+
+python tools/prepare_cityscapes_olac.py \
+    --cityscapes_root datasets/data/cityscapes \
+    --labels_dir datasets/cityscapes_olac \
+    --output datasets/data/cityscapes_olac
+
+export DETECTRON2_DATASETS=datasets/data
+```
+
+This creates the complete train/val splits and their low/mid/high subsets, and places the occlusion labels under `datasets/data/cityscapes_olac/gtFine/`. Files are symlinked by default, so keep the source Cityscapes directory; add `--copy` to create independent copies. Original Cityscapes images and segmentation annotations are not included in the Release.
 
 ### Background-blackened images
 
