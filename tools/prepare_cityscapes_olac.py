@@ -6,8 +6,9 @@
 """Build the Cityscapes-OLAC layout from an official Cityscapes copy.
 
 Cityscapes itself may not be redistributed. Download the new occlusion-level
-annotations from the Cityscapes-OLAC GitHub Release into datasets/cityscapes_olac/
-as occlusion_label_{train,val}.json before running this script (see README).
+annotations from the Cityscapes-OLAC GitHub Release directly into the output
+dataset's gtFine/ directory as occlusion_label_{train,val}.json before running
+this script. The default location is datasets/data/cityscapes_olac/gtFine/.
 This script includes the complete train/val splits and per-occlusion-level
 subsets (low / mid / high) matching those labels.
 
@@ -24,7 +25,6 @@ Prerequisites:
 Usage:
     python tools/prepare_cityscapes_olac.py \
         --cityscapes_root datasets/data/cityscapes \
-        --labels_dir      datasets/cityscapes_olac \
         --output          datasets/data/cityscapes_olac
 
 By default files are symlinked; pass --copy to materialise real copies.
@@ -48,14 +48,17 @@ def parse_args():
     )
     parser.add_argument("--cityscapes_root", default="datasets/data/cityscapes",
                         help="official Cityscapes root (leftImg8bit/, gtFine/ incl. cityscapes_panoptic_*)")
-    parser.add_argument("--labels_dir", default="datasets/cityscapes_olac",
-                        help="folder holding occlusion_label_{train,val}.json downloaded from the GitHub Release")
+    parser.add_argument("--labels_dir",
+                        help="folder holding occlusion_label_{train,val}.json; when omitted, use <output>/gtFine")
     parser.add_argument("--output", default="datasets/data/cityscapes_olac",
                         help="output root for the complete and per-level dataset")
     parser.add_argument("--splits", nargs="+", default=["train", "val"], choices=["train", "val"])
     parser.add_argument("--copy", action="store_true",
                         help="copy files instead of symlinking")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.labels_dir is None:
+        args.labels_dir = os.path.join(args.output, "gtFine")
+    return args
 
 
 def place(src, dst, copy):

@@ -164,23 +164,6 @@ Download the occlusion-level annotations from [GitHub Releases](https://github.c
 
 Each JSON maps a Cityscapes image ID (e.g., `weimar_000095_000019`, without the `_leftImg8bit.png` suffix) to `low`, `mid`, or `high`, following the same annotation protocol as [COCO-OLAC](https://github.com/wenbo-wei/COCO-OLAC#annotation-format).
 
-Create `datasets/cityscapes_olac/` and save both downloaded JSON files there. Download the original images and `gtFine` annotations from [Cityscapes](https://www.cityscapes-dataset.com/downloads/) into `datasets/data/cityscapes/`. From the PEMOLA repository root, generate the semantic training IDs and panoptic annotations, then build Cityscapes-OLAC:
-
-```bash
-export CITYSCAPES_DATASET="$PWD/datasets/data/cityscapes"
-python -m cityscapesscripts.preparation.createTrainIdLabelImgs
-python -m cityscapesscripts.preparation.createPanopticImgs --set-names train val
-
-python tools/prepare_cityscapes_olac.py \
-    --cityscapes_root datasets/data/cityscapes \
-    --labels_dir datasets/cityscapes_olac \
-    --output datasets/data/cityscapes_olac
-
-export DETECTRON2_DATASETS=datasets/data
-```
-
-This creates the complete train/val splits and their low/mid/high subsets, and places the occlusion labels under `datasets/data/cityscapes_olac/gtFine/`. Files are symlinked by default, so keep the source Cityscapes directory and downloaded JSON files; add `--copy` to create independent copies. Original Cityscapes images and segmentation annotations are not included in the Release.
-
 ### Background-blackened images
 
 The **occlusion classifier** uses the separate `coco_olac_cls` splits. Use the following command to blacken image backgrounds:
