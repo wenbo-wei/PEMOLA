@@ -9,7 +9,6 @@
 *.diff
 *.jpg
 !assets/*.png
-!datasets/cityscapes_olac/*.json
 
 # compilation and distribution
 __pycache__

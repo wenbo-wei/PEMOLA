@@ -5,8 +5,9 @@
 # and Occlusion-Level Attention (ICME 2026).
 """Build the Cityscapes-OLAC layout from an official Cityscapes copy.
 
-Cityscapes itself may not be redistributed, so this repo ships only the new
-occlusion-level annotations (datasets/cityscapes_olac/occlusion_label_*.json).
+Cityscapes itself may not be redistributed. Download the new occlusion-level
+annotations from the Cityscapes-OLAC GitHub Release into datasets/cityscapes_olac/
+as occlusion_label_{train,val}.json before running this script (see README).
 This script includes the complete train/val splits and per-occlusion-level
 subsets (low / mid / high) matching those labels.
 
@@ -48,7 +49,7 @@ def parse_args():
     parser.add_argument("--cityscapes_root", default="datasets/data/cityscapes",
                         help="official Cityscapes root (leftImg8bit/, gtFine/ incl. cityscapes_panoptic_*)")
     parser.add_argument("--labels_dir", default="datasets/cityscapes_olac",
-                        help="folder holding occlusion_label_{train,val}.json (shipped in this repo)")
+                        help="folder holding occlusion_label_{train,val}.json downloaded from the GitHub Release")
     parser.add_argument("--output", default="datasets/data/cityscapes_olac",
                         help="output root for the complete and per-level dataset")
     parser.add_argument("--splits", nargs="+", default=["train", "val"], choices=["train", "val"])
